@@ -1,0 +1,29 @@
+# top-most EditorConfig file
+root = true
+
+# 'insert_final_newline = false' should not remove last empty line
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = tab
+tab_width = 4
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+[*.php]
+insert_final_newline = false
+
+[*.md]
+trim_trailing_whitespace = false
+insert_final_newline = false
+
+[*.css]
+indent_style = space
+indent_size = 2
+
+[/version.txt]
+insert_final_newline = false
+
+[*.yml]
+indent_style = space
