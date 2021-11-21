@@ -3,31 +3,17 @@
     const tabs = [{name: 'Todo', id: 1}, {name: 'Groceries', id: 2}, {name: 'Test', id: 3}];
 </script>
 
-
-<div>
-    <button class="
-    btn 
-    btn-success
-    mb-2
-    btn-outline
-    text-white
-    normal-case 
-    w-full 
-    justify-start 
-    btn-medium"
-    ><i class="fas fa-plus"/>&nbsp;New</button>
-    {#each tabs as tab, i}
-        <a href="./{tab.id}">
-            <button class="
-            btn 
-            {$page.path == `/list/${tab.id}` ? 'btn-active' : ''} 
-            mb-2
-            btn-ghost 
-            normal-case 
-            w-full 
-            justify-start 
-            btn-medium"
-            >{tab.name}</button>
-        </a>
+<ul class="mt-6">
+    {#each tabs as tab}
+        <li class="{$page.path == `/list/${tab.id}` ? 'bg-gray-dark' : 'bg-dark'} cursor-pointer mr-1 border-gray-dark inline-block border border-b-0 rounded-tr-md">
+            <small>
+                <a class="block pl-10 pr-2 py-1.5" href="./{tab.id}">{tab.name} <i class="fas pl-7 fa-caret-down"/></a>
+            </small>
+        </li>
     {/each}
-</div>
+    <li class="cursor-pointer -ml-1 bg-gray border-gray-dark inline-block border border-b-0 rounded-tr-md">
+        <small>
+            <a class="block px-2 py-1.5 font-bold" href="#">+</a>
+        </small>
+    </li>
+</ul>

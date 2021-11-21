@@ -16,9 +16,6 @@ module.exports = {
       }
     },
     colors: {
-      white: {
-        DEFAULT: '#fff'
-      },
       blue: {
         DEFAULT: '#b5d5ff',
       },
@@ -40,7 +37,5 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [
-    require('daisyui'),
-  ],
+  plugins: [],
 }

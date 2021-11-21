@@ -2,7 +2,7 @@
     import Item from "./Item.svelte";
 </script>
 
-<!-- <div class="bg-gray-dark p-2 flex">
+<div class="bg-gray-dark p-2 flex">
     <div class="mr-2">
         <input class="border-gray-darkest border w-96 p-1 text-sm rounded-md" type="text" placeholder="New task">
         <span>new</span>
@@ -10,56 +10,33 @@
     <div class="flex-1 text-right">
         <input class="border-gray-darkest border w-64 p-1 text-sm rounded-md" type="text" placeholder="Search">
     </div>
-</div> -->
-
-
-<div class="navbar mb-2 border-info border rounded-box">
-    <div class="flex-1 lg:flex-none">
-        <div class="form-control">
-            <div class="relative">
-                <input type="text" placeholder="New Item" class="w-full pr-16 input input-ghost input-bordered"> 
-                <button class="absolute top-0 right-0 rounded-l-none btn btn-ghost"><i class="fas fa-plus"/></button>
-            </div>
-        </div> 
-    </div> 
+</div>
+<div class="py-3 flex items-center flex-align border-b-2 border-blue">
+    <h2 class="font-bold mr-2">Tasks (1) <i class="fas fa-caret-down"/></h2>
     <div>
-        <button class="btn btn-square btn-ghost mr-2">
-            <i class="fas fa-filter"/>
-        </button>
-      <button class="btn btn-square btn-ghost">
-        <i class="fas fa-search"/>
-      </button>
-    </div> 
-  </div>
-
-<div class="flex my-5">
-    <div>
-        <h2 class="font-bold">Tasks (1)</h2>
+        <small>Notes: <a href="#">Show</a> / <a href="#">Hide</a></small> 
     </div>
     <div class="flex-1 text-right">
-        <div class="btn-group justify-end">
-            <button class="btn btn-outline btn-xs bg-info border-info text-white pointer-events-none">Show Notes</button> 
-            <button class="btn btn-outline btn-xs">Hide Notes</button> 
-            <button class="btn btn-outline btn-xs">
-                <i class="fas fa-ellipsis-h"/>
-            </button>
-          </div>
+        <small>Tags <i class="fas fa-caret-down"/></small>
     </div>
 </div>
-
-<div class="overflow-x-auto mb-5">
-    <table class="table table-zebra w-full">
-      <tbody>
-        <Item/>
-        <Item/>
-        <Item done={true}/>
-        <Item/>
-        <Item/>
-        <Item/>
-        <Item/>
-        <Item overdue={true}/>
-        <Item done={true}/>
-      </tbody> 
-    </table>
-  </div>
-  
+<ul class="h-items my-3 overflow-auto">
+    <Item/>
+    <Item/>
+    <Item/>
+    <Item/>
+    <Item/>
+    <Item/>
+    <Item/>
+    <Item/>
+    <Item/>
+    <Item/>
+    <Item/>
+    <Item/>
+    <Item/>
+    <Item/>
+    <Item/>
+    <Item/>
+    <Item/>
+    <Item/>
+</ul>
