@@ -3,5 +3,12 @@
     import List from '../../partials/List.svelte';
 </script>
 
-<Tabs/>
-<List/>
+<div class="flex">
+    <div class="w-48 border-r border-gray-dark">
+        <Tabs/>
+    </div>
+    <div class="flex-1">
+        <List/>
+    </div>
+</div>
+
