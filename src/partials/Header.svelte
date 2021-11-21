@@ -1,9 +1,9 @@
-<header class="flex my-2">
+<header class="flex my-5">
     <div class="mr-3">
-        <h1 class="text-2xl font-bold">myTinyTodo Demo</h1>
+        <h1 class="text-2xl font-bold"><a href="/">myTinyTodo Demo</a></h1>
     </div>
-    <div class="border-b border-blue flex-1 text-right">
-        <small><a href="/settings">Settings</a></small>
-        <small><a href="/login">Log In</a></small>
+    <div class="flex-1 text-right relative">
+        <a href="/login"><button class="btn btn-xs mr-2"><i class="fas fa-cog"/></button>
+        <a href="/login"><button class="btn btn-info btn-xs">Log In</button>
     </div>
 </header>
