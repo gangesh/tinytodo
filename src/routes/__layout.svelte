@@ -3,9 +3,9 @@
     import Footer from "../partials/Footer.svelte";
 </script>
 
-<style>@import '../style.css';</style>
+<style lang="postcss">@import '../style.css';</style>
 
-<div id="container">
+<div class="container">
     <Header/>
     <article>
         <slot></slot>
