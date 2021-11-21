@@ -13,7 +13,7 @@
 </div> -->
 
 
-<div class="navbar mb-2 border-info border rounded-box">
+<!-- <div class="navbar mb-2 border-info border rounded-box">
     <div class="flex-1 lg:flex-none">
         <div class="form-control">
             <div class="relative">
@@ -23,23 +23,28 @@
         </div> 
     </div> 
     <div>
-        <button class="btn btn-square btn-ghost mr-2">
-            <i class="fas fa-filter"/>
-        </button>
-      <button class="btn btn-square btn-ghost">
-        <i class="fas fa-search"/>
-      </button>
+       
     </div> 
-  </div>
+  </div> -->
 
-<div class="flex my-5">
-    <div>
-        <h2 class="font-bold">Tasks (1)</h2>
+<div class="flex items-center">
+    <div class="mr-5">
+        <h2 class="font-bold">Groceries (1)</h2>
+    </div>
+    <div class="flex-1">
+        <div class="relative">
+            <input type="text" placeholder="Search" class="w-full pr-16 input input-sm input-gray py-2 input-bordered"> 
+            <button class="absolute top-0 right-0 rounded-l-none btn-sm btn btn-gray">
+                <i class="fas fa-plus"/>
+            </button>
+        </div>
     </div>
     <div class="flex-1 text-right">
+        
         <div class="btn-group justify-end">
-            <button class="btn btn-outline btn-xs bg-info border-info text-white pointer-events-none">Show Notes</button> 
-            <button class="btn btn-outline btn-xs">Hide Notes</button> 
+            Notes:&nbsp;
+            <button class="btn btn-outline btn-xs bg-info border-info text-white pointer-events-none">Show</button> 
+            <button class="btn btn-outline btn-xs">Hide</button> 
             <button class="btn btn-outline btn-xs">
                 <i class="fas fa-ellipsis-h"/>
             </button>
