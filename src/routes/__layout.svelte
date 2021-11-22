@@ -5,7 +5,7 @@
 
 <style lang="postcss">@import '../style.css';</style>
 
-<div class="container">
+<div class="px-3">
     <Header/>
     <article>
         <slot></slot>

@@ -16,8 +16,14 @@ module.exports = {
       }
     },
     colors: {
+      white: {
+        DEFAULT: '#fff'
+      },
+      black: {
+        DEFAULT: '#000'
+      },
       blue: {
-        DEFAULT: '#b5d5ff',
+        DEFAULT: '#b5d5ff'
       },
       gray: {
         DEFAULT: '#fbfbfb',

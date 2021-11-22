@@ -1,14 +1,52 @@
 <script>
     import Tabs from '../../partials/Tabs.svelte';
     import List from '../../partials/List.svelte';
+    import Drawer from '../../partials/Drawer.svelte';
+    import { page } from '$app/stores';
+    import { goto } from '$app/navigation';
+    import { token, lists, activeItem } from '$lib/stores';
+    import { onMount } from 'svelte';
+
+    let page$ = null;
+
+    page.subscribe(page => {
+        page$ = page;
+    });
+
+    onMount(async () => {
+        token.subscribe(token => {
+            if (!token) { goto('/login', {replacePath: true}); }
+        });
+    });
 </script>
 
 <div class="flex">
-    <div class="w-48 border-r border-gray-dark">
-        <Tabs/>
-    </div>
-    <div class="flex-1">
-        <List/>
-    </div>
+    {#if page$ && $lists}
+        <div class="w-48 border-r border-gray-dark">
+            <Tabs/>
+        </div>
+        <div class="flex-1">
+            <List index={page$.params.id}/>
+        </div>
+    {:else}
+        <p>Loading...</p>
+    {/if}
 </div>
+
+<div class="
+    bg-white 
+    w-80
+    {$activeItem ? 'right-0' : '-right-80'}
+    absolute 
+    transition-all
+    duration-500
+    top-0 
+    h-screen border-l 
+    border-gray-darkest 
+    p-3">
+        {#if $activeItem}
+            <Drawer/>
+        {/if}
+</div> 
+
 
