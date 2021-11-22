@@ -25,4 +25,6 @@
 
 <input type="text" placeholder="Tags" class="block w-full p-2 border border-gray-darkest my-3" bind:value={item.tags}>
 
+<input type="text" placeholder="List" class="block w-full p-2 border border-gray-darkest my-3" bind:value={item.listId}>
+
 <button type="submit" class="mt-3">Submit</button><br><br>

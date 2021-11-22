@@ -7,11 +7,15 @@
 
     let subject = '';
     let token$ = null;
+    let notes = false;
+
+    const showNotes = () => { notes = true; }
+    const hideNotes = () => { notes = false; }
 
     token.subscribe(token => token$ = token);
 
     async function addItem() {
-
+        if (subject.trim() === '') { return }
         let newItem = await fetch('/api/items', {
             method: 'POST',
             headers: {
@@ -41,21 +45,32 @@
     {#if $lists[index]}
         <h2 class="font-bold mr-2">{$lists[index].name} ({$lists[index].items.length})
         <MenuOverlay dir={'left'}>
-            <p><i class="fas fa-times"/> Delete list</p>
+            <p class="hover:opacity-40 cursor-pointer mb-1">All Tasks ({$lists[index].items.length})</p>
+            <p class="hover:opacity-40 cursor-pointer mb-1">To Do (0)</p>
+            <p class="hover:opacity-40 cursor-pointer mb-1">Overdue (0)</p>
+            <p class="hover:opacity-40 cursor-pointer mb-1">Today / Tomorrow (0)</p>
+            <p class="hover:opacity-40 cursor-pointer mb-1">Soon (0)</p>
+            <p class="hover:opacity-40 cursor-pointer">Done (0)</p>
         </MenuOverlay>
         </h2>
     {/if}
     <div>
-        <small>Notes: <a href="#">Show</a> / <a href="#">Hide</a></small> 
+        <small>Notes: <span class="{notes ? 'font-bold' : ''} cursor-pointer" on:click={showNotes}>Show</span>
+        / 
+        <span class="{notes ? '' : 'font-bold'} cursor-pointer" on:click={hideNotes}>Hide</span></small> 
     </div>
     <div class="flex-1 text-right">
-        <small>Tags <MenuOverlay/></small>
+        <small>Tags 
+            <MenuOverlay>
+                <p>No tags to filter by.</p>
+            </MenuOverlay>
+        </small>
     </div>
 </div>
 <ul class="h-items my-3 overflow-auto">
     {#if $lists[index]}
         {#each $lists[index].items as item, i}
-            <Item item={item}/>
+            <Item item={item} showNotes={notes}/>
         {/each}
     {/if}
 </ul>
