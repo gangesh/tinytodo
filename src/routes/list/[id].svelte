@@ -1,6 +1,6 @@
 <script>
-    import Tabs from '../../partials/Tabs.svelte';
-    import List from '../../partials/List.svelte';
+    import Lists from '../../partials/Lists.svelte';
+    import Items from '../../partials/Items.svelte';
     import Drawer from '../../partials/Drawer.svelte';
     import { page } from '$app/stores';
     import { goto } from '$app/navigation';
@@ -23,10 +23,12 @@
 <div class="flex">
     {#if page$ && $lists}
         <div class="w-48 border-r border-gray-dark">
-            <Tabs/>
+            <Lists/>
         </div>
         <div class="flex-1">
-            <List index={page$.params.id}/>
+            {#if $lists.length !== 0}
+                <Items index={page$.params.id}/>
+            {/if}
         </div>
     {:else}
         <p>Loading...</p>
