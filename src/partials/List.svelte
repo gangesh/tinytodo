@@ -2,6 +2,7 @@
     import Item from "./Item.svelte";
     import MenuOverlay from './MenuOverlay.svelte';
     import { lists, fetchData, token } from '$lib/stores';
+    import { isOverdue, isDueNow, isDueSoon } from '$lib/days';
 
     export let index;
 
@@ -44,9 +45,9 @@
         <MenuOverlay dir={'left'}>
             <p class="hover:opacity-40 cursor-pointer mb-1">All Tasks ({$lists[index].items.length})</p>
             <p class="hover:opacity-40 cursor-pointer mb-1">To Do ({$lists[index].items.filter(i => i.status === 'TODO').length})</p>
-            <p class="hover:opacity-40 cursor-pointer mb-1">Overdue (0)</p>
-            <p class="hover:opacity-40 cursor-pointer mb-1">Today / Tomorrow (0)</p>
-            <p class="hover:opacity-40 cursor-pointer mb-1">Soon (0)</p>
+            <p class="hover:opacity-40 cursor-pointer mb-1">Overdue ({$lists[index].items.filter(i => isOverdue(i)).length})</p>
+            <p class="hover:opacity-40 cursor-pointer mb-1">Today / Tomorrow ({$lists[index].items.filter(i => isDueNow(i)).length})</p>
+            <p class="hover:opacity-40 cursor-pointer mb-1">Soon ({$lists[index].items.filter(i => isDueSoon(i)).length})</p>
             <p class="hover:opacity-40 cursor-pointer">Done ({$lists[index].items.filter(i => i.status === 'DONE').length})</p>
         </MenuOverlay>
         </h2>

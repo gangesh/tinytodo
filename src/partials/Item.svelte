@@ -2,6 +2,7 @@
     import { activeItem } from '$lib/stores';
     import MenuOverlay from '../partials/MenuOverlay.svelte';
     import { token, fetchData } from '$lib/stores';
+    import { getTimeRemaining, isOverdue, isDueNow, isDueSoon } from '$lib/days';
 
     export let item;
     export let showNotes = false;
@@ -47,6 +48,23 @@
         <span on:click|self={setActive} class="{item.status === 'DONE' ? 'line-through' : ''}">{item.subject}</span>
         {#if showNotes && item.notes}
             <small on:click|self={setActive} class="font-bold"> - {item.notes}</small>
+        {/if}
+    </div>
+    <div on:click|self={setActive} class="mr-3">
+        {#if isDueSoon(item) }
+            <span class="text-yellow">
+                due soon
+            </span>
+        {/if}
+        {#if isDueNow(item) }
+            <span class="text-yellow">
+                {getTimeRemaining(item.due).days - 1 === 0 ? 'due today' : 'due tomorrow'}
+            </span>
+        {/if}
+        {#if isOverdue(item) }
+            <span class="text-red">
+                <i class="fas fa-arrow-left"/> {getTimeRemaining(item.due).days - 1} day{getTimeRemaining(item.due).days - 1 !== 1 ? 's' : ''} ago
+            </span>
         {/if}
     </div>
     <div class="group-hover:opacity-100 opacity-0 h-full">

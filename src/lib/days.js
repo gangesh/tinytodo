@@ -1,11 +1,7 @@
-import dayjs from 'dayjs';
-
-console.log('day', dayjs().format());
-
-export const getTimeRemaining = (item) => {
+export const getTimeRemaining = (due) => {
     const date_now = new Date().getTime();
-    const date_future = new Date(item.createdOn).getTime();
-    const unit = date_future < date_now ? 'pos' : 'neg';
+    const date_future = new Date(due).getTime();
+    const unit = date_future < date_now ? 'neg' : 'pos';
     // get total seconds between the times
     var delta = Math.abs(date_future - date_now) / 1000;
     // calculate (and subtract) whole days
@@ -20,4 +16,22 @@ export const getTimeRemaining = (item) => {
     // what's left is seconds
     var seconds = Math.floor(delta % 60)
     return {days,hours,minutes,seconds,unit}
+}
+
+export const isOverdue = (item) => {
+    if (!item.due) { return false }
+    const remaining = getTimeRemaining(item.due);
+    return item.status === 'TODO' && remaining.unit === 'neg' && remaining.days > 1;
+}
+
+export const isDueNow = (item) => {
+    if (!item.due) { return false }
+    const remaining = getTimeRemaining(item.due);
+    return item.status === 'TODO' && remaining.unit === 'neg' && (remaining.days === 1 || remaining.days === 0);
+}
+
+export const isDueSoon = (item) => {
+    if (!item.due) { return false }
+    const remaining = getTimeRemaining(item.due);
+    return item.status === 'TODO' && remaining.unit === 'pos' && remaining.days <= 1;
 }
