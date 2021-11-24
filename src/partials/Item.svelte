@@ -1,12 +1,29 @@
 <script>
     import { activeItem } from '$lib/stores';
     import MenuOverlay from '../partials/MenuOverlay.svelte';
+    import { token, fetchData } from '$lib/stores';
 
     export let item;
     export let showNotes = false;
 
     const setActive = () => {
         activeItem.set(item);
+    }
+
+    async function deleteItem() {
+        const c = confirm("Are you sure you want to delete this item?");
+        if (!c) { return }
+
+        let deleteItem = await fetch('/api/items', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': $token
+            },
+            body: JSON.stringify({id: item.id})
+        }).then(i => i.json());
+
+        fetchData($token);
     }
 </script>
 
@@ -19,8 +36,8 @@
     </div>
     <div class="group-hover:opacity-100 opacity-0 h-full">
         <MenuOverlay icon={'fas fa-ellipsis-v'}>
-            <p class="hover:opacity-40 cursor-pointer mb-1">Edit</p>
-            <p class="hover:opacity-40 cursor-pointer">Delete</p>
+            <p on:click={setActive} class="hover:opacity-40 cursor-pointer mb-1">Edit</p>
+            <p on:click={deleteItem} class="hover:opacity-40 cursor-pointer">Delete</p>
         </MenuOverlay>
     </div>
 </li>

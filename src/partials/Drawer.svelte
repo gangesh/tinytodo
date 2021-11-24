@@ -1,11 +1,26 @@
 <script>
-    import { token, activeItem } from '$lib/stores';
+    import { token, activeItem, lists, fetchData } from '$lib/stores';
 
     let item;
 
     const close = () => { activeItem.set(null); }
 
-    activeItem.subscribe(activeItem => item = activeItem);
+    activeItem.subscribe(activeItem => item = Object.assign({}, activeItem));
+
+    async function updateItem() {
+
+        let update = await fetch('/api/items', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': $token
+            },
+            body: JSON.stringify(item)
+        }).then(i => i.json());
+
+        fetchData($token);
+        close();
+    }
 </script>
 
 <div class="flex items-center">
@@ -15,16 +30,26 @@
     </div>
 </div>
 
-<input type="text" placeholder="Subject" class="block w-full p-2 border border-gray-darkest my-3" bind:value={item.subject}>
-
-<textarea placeholder="Notes" rows="5" class="block w-full p-2 border border-gray-darkest my-3" bind:value={item.notes}/>
-
-<input type="text" placeholder="Status" class="block w-full p-2 border border-gray-darkest my-3" bind:value={item.status}>
-
-<input type="text" placeholder="Due Date" class="block w-full p-2 border border-gray-darkest my-3" bind:value={item.due}>
-
-<input type="text" placeholder="Tags" class="block w-full p-2 border border-gray-darkest my-3" bind:value={item.tags}>
-
-<input type="text" placeholder="List" class="block w-full p-2 border border-gray-darkest my-3" bind:value={item.listId}>
-
-<button type="submit" class="mt-3">Submit</button><br><br>
+<form on:submit|preventDefault={updateItem}>
+    <input type="text" placeholder="Subject" class="block w-full p-2 border border-gray-darkest my-3" bind:value={item.subject}>
+    <textarea placeholder="Notes" rows="5" class="block w-full p-2 border border-gray-darkest my-3" bind:value={item.notes}/>
+    <select class="block w-full p-2 border border-gray-darkest my-3" bind:value={item.status}>
+        <option value="TODO">To Do</option>
+        <option value="DONE">Done</option>
+    </select>
+    <input type="text" placeholder="Due Date" class="block w-full p-2 border border-gray-darkest my-3" bind:value={item.due}>
+    <input type="text" placeholder="Tags" class="block w-full p-2 border border-gray-darkest my-3" bind:value={item.tags}>
+    <select class="block w-full p-2 border border-gray-darkest my-3" bind:value={item.priority}>
+        <option value="{2}">+1</option>
+        <option value="{1}">+1</option>
+        <option value="{0}">0</option>
+        <option value="{-1}">-1</option>
+        <option value="{-2}">-2</option>
+    </select>
+    <select class="block w-full p-2 border border-gray-darkest my-3" bind:value={item.listId}>
+        {#each $lists as list, i}
+            <option value="{list.id}">{list.name}</option>
+        {/each}
+    </select>
+    <button type="submit" class="mt-3">Submit</button><br><br>
+</form>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 23, 2021 at 07:16 PM
+-- Generation Time: Nov 24, 2021 at 04:38 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.24
 
@@ -32,6 +32,7 @@ CREATE TABLE `items` (
   `subject` varchar(64) NOT NULL,
   `notes` varchar(64) DEFAULT NULL,
   `priority` int(11) NOT NULL DEFAULT 0,
+  `status` text NOT NULL DEFAULT 'TODO',
   `tags` varchar(64) DEFAULT NULL,
   `due` varchar(64) DEFAULT NULL,
   `listId` int(11) NOT NULL

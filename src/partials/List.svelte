@@ -6,13 +6,10 @@
     export let index;
 
     let subject = '';
-    let token$ = null;
     let notes = false;
 
     const showNotes = () => { notes = true; }
     const hideNotes = () => { notes = false; }
-
-    token.subscribe(token => token$ = token);
 
     async function addItem() {
         if (subject.trim() === '') { return }
@@ -20,13 +17,13 @@
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': token$
+                'Authorization': $token
             },
             body: JSON.stringify({subject, listId: $lists[index].id})
         }).then(i => i.json());
 
         subject = '';
-        fetchData(token$);
+        fetchData($token);
     }
 </script>
 
