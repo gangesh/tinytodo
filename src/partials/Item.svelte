@@ -8,6 +8,7 @@
     export let showNotes = false;
 
     const setActive = () => {
+        if ($activeItem === item) { activeItem.set(null); return; }
         activeItem.set(item);
     }
 

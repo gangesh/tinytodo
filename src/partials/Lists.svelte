@@ -73,7 +73,7 @@
             <div class="group-hover:opacity-100 opacity-0 h-full">
                 <MenuOverlay dir={'left'} icon={'fas fa-ellipsis-h'}>
                     <p on:click={renameList(list)} class="hover:opacity-40 cursor-pointer mb-1">Rename list</p>
-                    <p on:click={deleteList(list.id)} class="hover:opacity-40 cursor-pointer mb-1">Delete list</p>
+                    <p on:click={deleteList(list)} class="hover:opacity-40 cursor-pointer mb-1">Delete list</p>
                     <p class="hover:opacity-40 cursor-pointer mb-1">Clear completed tasks</p>
                     <p class="hover:opacity-40 cursor-pointer mb-1">Export as CSV</p>
                     <p class="hover:opacity-40 cursor-pointer mb-1">Export as iCal</p>

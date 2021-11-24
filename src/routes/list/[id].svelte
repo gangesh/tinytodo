@@ -26,7 +26,9 @@
             <Lists/>
         </div>
         <div class="flex-1">
-            <Items index={page$.params.id}/>
+            {#if $lists.length !== 0}
+                <Items index={page$.params.id}/>
+            {/if}
         </div>
     {:else}
         <p>Loading...</p>
