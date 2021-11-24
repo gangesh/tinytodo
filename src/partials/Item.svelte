@@ -10,6 +10,20 @@
         activeItem.set(item);
     }
 
+    async function setStatus() {
+        const s = item.status === 'TODO' ? 'DONE' : 'TODO';
+        let status = await fetch('/api/items', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': $token
+            },
+            body: JSON.stringify({id: item.id, status: s})
+        }).then(i => i.json());
+
+        fetchData($token);
+    }
+
     async function deleteItem() {
         const c = confirm("Are you sure you want to delete this item?");
         if (!c) { return }
@@ -29,9 +43,10 @@
 
 <li on:click|self={setActive} class="group border-b hover:bg-gray-dark border-gray-dark cursor-pointer p-2 flex">
     <div class="flex-1 font-light" on:click|self={setActive}>
-        <input type="checkbox"> {item.subject}
+        <input type="checkbox" checked={item.status === 'DONE'} on:change={setStatus}> 
+        <span on:click|self={setActive} class="{item.status === 'DONE' ? 'line-through' : ''}">{item.subject}</span>
         {#if showNotes && item.notes}
-            <small class="font-bold">- {item.notes}</small>
+            <small on:click|self={setActive} class="font-bold"> - {item.notes}</small>
         {/if}
     </div>
     <div class="group-hover:opacity-100 opacity-0 h-full">

@@ -37,8 +37,8 @@
         <option value="TODO">To Do</option>
         <option value="DONE">Done</option>
     </select>
-    <input type="text" placeholder="Due Date" class="block w-full p-2 border border-gray-darkest my-3" bind:value={item.due}>
-    <input type="text" placeholder="Tags" class="block w-full p-2 border border-gray-darkest my-3" bind:value={item.tags}>
+    <input type="date" placeholder="Due Date" class="block w-full p-2 border border-gray-darkest my-3" bind:value={item.due}>
+    <input type="text" placeholder="Tags (comma-separated)" class="block w-full p-2 border border-gray-darkest my-3" bind:value={item.tags}>
     <select class="block w-full p-2 border border-gray-darkest my-3" bind:value={item.priority}>
         <option value="{2}">+1</option>
         <option value="{1}">+1</option>

@@ -86,7 +86,7 @@
                     <p class="hover:opacity-40 cursor-pointer mb-1">Sort by due date</p>
                     <p class="hover:opacity-40 cursor-pointer mb-1">Sort by date modified</p>
                     <hr>
-                    <p class="hover:opacity-40 cursor-pointer mt-1">Show completed tasks</p>
+                    <p class="hover:opacity-40 cursor-pointer mt-1">Hide completed tasks</p>
                 </MenuOverlay>
             </div>
         </li>
