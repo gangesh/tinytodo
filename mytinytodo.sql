@@ -32,7 +32,7 @@ CREATE TABLE `items` (
   `subject` varchar(64) NOT NULL,
   `notes` varchar(64) DEFAULT NULL,
   `priority` int(11) NOT NULL DEFAULT 0,
-  `status` text NOT NULL DEFAULT 'TODO',
+  `status` varchar(64) NOT NULL DEFAULT 'TODO',
   `tags` varchar(64) DEFAULT NULL,
   `due` varchar(64) DEFAULT NULL,
   `listId` int(11) NOT NULL
