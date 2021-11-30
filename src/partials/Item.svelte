@@ -47,8 +47,8 @@
     }
 </script>
 
-<li on:click|self={setActive} class="border-b hover:bg-gray-dark border-gray-dark cursor-pointer p-2 flex">
-    <div class="group flex-1 font-light" on:click|self={setActive}>
+<li on:click|self={setActive} class="group-scope border-b hover:bg-gray-dark border-gray-dark cursor-pointer p-2 flex">
+    <div class="flex-1 font-light" on:click|self={setActive}>
         <input type="checkbox" checked={item.status === 'DONE'} on:change={setStatus}> 
         <span on:click|self={setActive} class="{item.status === 'DONE' ? 'line-through' : ''}">{item.subject}</span>
         {#if showNotes && item.notes}
@@ -77,7 +77,7 @@
             <Tooltip content={`due ${due}`}/>
         {/if}
     </div>
-    <div class="group-hover:opacity-100 opacity-0 h-full">
+    <div class="group-scope-hover:opacity-100 opacity-0 h-full">
         <MenuOverlay icon={'fas fa-ellipsis-v'}>
             <p on:click={setActive} class="hover:opacity-40 cursor-pointer mb-1">Edit</p>
             <p on:click={deleteItem} class="hover:opacity-40 cursor-pointer">Delete</p>
