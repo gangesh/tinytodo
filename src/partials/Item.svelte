@@ -1,11 +1,15 @@
 <script>
     import { activeItem } from '$lib/stores';
     import MenuOverlay from '../partials/MenuOverlay.svelte';
+    import Tooltip from '../partials/Tooltip.svelte';
     import { token, fetchData } from '$lib/stores';
     import { getTimeRemaining, isOverdue, isDueNow, isDueSoon } from '$lib/days';
 
     export let item;
     export let showNotes = false;
+
+    let due = '';
+    $:{ due = `${new Date(item.due).getUTCMonth() + 1}/${new Date(item.due).getUTCDate()}/${new Date(item.due).getUTCFullYear()}` }
 
     const setActive = () => {
         if ($activeItem === item) { activeItem.set(null); return; }
@@ -43,15 +47,15 @@
     }
 </script>
 
-<li on:click|self={setActive} class="group border-b hover:bg-gray-dark border-gray-dark cursor-pointer p-2 flex">
-    <div class="flex-1 font-light" on:click|self={setActive}>
+<li on:click|self={setActive} class="border-b hover:bg-gray-dark border-gray-dark cursor-pointer p-2 flex">
+    <div class="group flex-1 font-light" on:click|self={setActive}>
         <input type="checkbox" checked={item.status === 'DONE'} on:change={setStatus}> 
         <span on:click|self={setActive} class="{item.status === 'DONE' ? 'line-through' : ''}">{item.subject}</span>
         {#if showNotes && item.notes}
             <small on:click|self={setActive} class="font-bold"> - {item.notes}</small>
         {/if}
     </div>
-    <div on:click={setActive} class="mr-3">
+    <div on:click={setActive} class="group mr-3">
         {#if isDueSoon(item)}
             <span class="text-yellow">
                 due soon
@@ -68,6 +72,9 @@
             <span>
                 <i class="fas fa-arrow-right"/> {getTimeRemaining(item.due).days} day{getTimeRemaining(item.due).days !== 1 ? 's' : ''}
             </span>
+        {/if}
+        {#if item.due}
+            <Tooltip content={`due ${due}`}/>
         {/if}
     </div>
     <div class="group-hover:opacity-100 opacity-0 h-full">

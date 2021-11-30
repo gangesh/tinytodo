@@ -20,7 +20,8 @@ module.exports = {
         DEFAULT: '#fff'
       },
       black: {
-        DEFAULT: '#000'
+        DEFAULT: '#000',
+        lighter: '#2a2e37'
       },
       yellow: {
         DEFAULT: 'goldenrod'
