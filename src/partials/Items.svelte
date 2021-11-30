@@ -9,6 +9,8 @@
     let subject = '';
     let notes = false;
     let items = [];
+    let tags = [];
+
     $: {
         search.subscribe(i => {
             window.setTimeout(() => {
@@ -16,7 +18,18 @@
                 if (i === null || i.trim() === '') { items = allItems; return; }
                 items = allItems.filter(item => item.subject.toLowerCase().indexOf(i.toLowerCase()) !== -1)
             }, 100)
-        })
+        });
+
+        tags = $lists[index].items[$filter]
+            .flatMap(i => i.tags)
+            .filter(i => i !== null)
+            .flatMap(i => i.split(','))
+            .map(i => i.trim())
+            .filter(unique);
+    }
+
+    const unique = (value, index, self) => {
+        return self.indexOf(value) === index
     }
 
     const showNotes = () => { notes = true; }
@@ -69,7 +82,13 @@
     <div class="flex-1 text-right">
         <small>Tags 
             <MenuOverlay>
-                <p>No tags to filter by.</p>
+                {#if tags.length !== 0}
+                    {#each tags as tag, i}
+                        <p class="hover:opacity-40 cursor-pointer mb-1">{tag}</p>
+                    {/each}
+                {:else}
+                    <p>No tags to filter by.</p>
+                {/if}
             </MenuOverlay>
         </small>
     </div>

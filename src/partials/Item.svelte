@@ -8,6 +8,8 @@
     export let item;
     export let showNotes = false;
 
+    let loading = false;
+
     let due = '';
     $: { 
         const date = new Date(item.due);
@@ -19,7 +21,9 @@
         activeItem.set(item);
     }
 
-    async function setStatus() {
+    async function setStatus(e) {
+        loading = true;
+        e.preventDefault();
         const s = item.status === 'TODO' ? 'DONE' : 'TODO';
         let status = await fetch('/api/items', {
             method: 'PUT',
@@ -31,6 +35,10 @@
         }).then(i => i.json());
 
         fetchData($token);
+        
+        setTimeout(() => {
+            loading = false;
+        }, 500)
     }
 
     async function deleteItem() {
@@ -52,8 +60,19 @@
 
 <li on:click|self={setActive} class="group-scope border-b hover:bg-gray-dark border-gray-dark cursor-pointer p-2 flex">
     <div class="flex-1 font-light" on:click|self={setActive}>
-        <input type="checkbox" checked={item.status === 'DONE'} on:change={setStatus}> 
+        {#if loading}
+            <i class="fas fa-spinner fa-pulse"/>
+        {:else}
+            <input type="checkbox" checked={item.status === 'DONE'} on:click={setStatus}> 
+        {/if}
         <span on:click|self={setActive} class="{item.status === 'DONE' ? 'line-through' : ''}">{item.subject}</span>
+        {#if item.tags}
+            <small class="font-bold">
+                {#each item.tags.split(',') as tag, i}
+                    <a class="hover:opacity-80 underline" href="#">{tag.trim()}</a>{i !== item.tags.split(',').length - 1 ? ', ' : ''}
+                {/each}
+            </small>
+        {/if}
         {#if showNotes && item.notes}
             <small on:click|self={setActive} class="font-bold"> - {item.notes}</small>
         {/if}
