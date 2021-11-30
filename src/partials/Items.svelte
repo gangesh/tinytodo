@@ -1,15 +1,17 @@
 <script>
     import Item from "./Item.svelte";
     import MenuOverlay from './MenuOverlay.svelte';
-    import { lists, fetchData, token, search, filter } from '$lib/stores';
+    import { lists, fetchData, token, search, filter, tags } from '$lib/stores';
     import { filters } from '$lib/dict';
+    import { addTag } from '$lib/tags';
+    import Tags from './Tags.svelte';
 
     export let index;
 
     let subject = '';
     let notes = false;
     let items = [];
-    let tags = [];
+    let tags$ = [];
 
     $: {
         search.subscribe(i => {
@@ -20,7 +22,7 @@
             }, 100)
         });
 
-        tags = $lists[index].items[$filter]
+        tags$ = $lists[index].items[$filter]
             .flatMap(i => i.tags)
             .filter(i => i !== null)
             .flatMap(i => i.split(','))
@@ -62,6 +64,7 @@
         <input id="search" class="border-gray-darkest border w-64 p-1 text-sm rounded-md" type="text" bind:value={$search} placeholder="Search">
     </div>
 </div>
+<Tags/>
 <div class="py-3 px-3 flex items-center flex-align border-b-2 border-blue">
     {#if $lists[index]}
         <h2 class="font-bold mr-2">{filters[$filter]} ({$lists[index].items[$filter].length})
@@ -82,9 +85,9 @@
     <div class="flex-1 text-right">
         <small>Tags 
             <MenuOverlay>
-                {#if tags.length !== 0}
-                    {#each tags as tag, i}
-                        <p class="hover:opacity-40 cursor-pointer mb-1">{tag}</p>
+                {#if tags$.length !== 0}
+                    {#each tags$ as tag, i}
+                        <p on:click={() => addTag(tag.trim(), $tags)} class="hover:opacity-40 cursor-pointer mb-1">{tag.trim()}</p>
                     {/each}
                 {:else}
                     <p>No tags to filter by.</p>

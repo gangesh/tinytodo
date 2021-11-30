@@ -29,7 +29,8 @@ const clearQueryParam = (field) => {
 export const token = writable(browser && localStorage.getItem("token") ? localStorage.getItem("token") : null);
 export const principal = writable(null);
 export const lists = writable(null);
-export const search = writable(null)
+export const search = writable(null);
+export const tags = writable([]);
 export const filter = writable(
     getQueryParam('filter') && Object.keys(filters).indexOf(getQueryParam('filter')) !== -1 ? 
     getQueryParam('filter') : 

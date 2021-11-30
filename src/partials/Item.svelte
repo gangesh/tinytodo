@@ -2,7 +2,8 @@
     import { activeItem } from '$lib/stores';
     import MenuOverlay from '../partials/MenuOverlay.svelte';
     import Tooltip from '../partials/Tooltip.svelte';
-    import { token, fetchData } from '$lib/stores';
+    import { token, fetchData, tags } from '$lib/stores';
+    import { addTag } from '$lib/tags';
     import { getTimeRemaining, isOverdue, isDueNow, isDueSoon } from '$lib/days';
 
     export let item;
@@ -69,7 +70,7 @@
         {#if item.tags}
             <small class="font-bold">
                 {#each item.tags.split(',') as tag, i}
-                    <a class="hover:opacity-80 underline" href="#">{tag.trim()}</a>{i !== item.tags.split(',').length - 1 ? ', ' : ''}
+                    <span class="hover:opacity-80 underline" on:click={() => addTag(tag.trim(), $tags)}>{tag.trim()}</span>{i !== item.tags.split(',').length - 1 ? ', ' : ''}
                 {/each}
             </small>
         {/if}
