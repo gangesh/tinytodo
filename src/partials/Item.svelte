@@ -9,7 +9,10 @@
     export let showNotes = false;
 
     let due = '';
-    $:{ due = `${new Date(item.due).getUTCMonth() + 1}/${new Date(item.due).getUTCDate()}/${new Date(item.due).getUTCFullYear()}` }
+    $: { 
+        const date = new Date(item.due);
+        due = `${date.getUTCMonth() + 1}/${date.getUTCDate()}/${date.getUTCFullYear()}`;
+    }
 
     const setActive = () => {
         if ($activeItem === item) { activeItem.set(null); return; }
