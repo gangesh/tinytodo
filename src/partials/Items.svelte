@@ -1,7 +1,7 @@
 <script>
     import Item from "./Item.svelte";
     import MenuOverlay from './MenuOverlay.svelte';
-    import { lists, fetchData, token, filter } from '$lib/stores';
+    import { lists, fetchData, token, search } from '$lib/stores';
     import { isOverdue, isDueNow, isDueSoon } from '$lib/days';
     import { filters } from '$lib/dict';
 
@@ -9,6 +9,14 @@
 
     let subject = '';
     let notes = false;
+
+    search.subscribe(() => { 
+        // This is kinda kludgy. It may be better to add a debounce.
+        if (!document.getElementById('search')) { return; }
+        setTimeout(() => {
+            document.getElementById('search').focus(); 
+        }, 5);
+    })
 
     const showNotes = () => { notes = true; }
     const hideNotes = () => { notes = false; }
@@ -37,7 +45,7 @@
         </form>
     </div>
     <div class="flex-1 text-right">
-        <input class="border-gray-darkest border w-64 p-1 text-sm rounded-md" type="text" placeholder="Search">
+        <input id="search" class="border-gray-darkest border w-64 p-1 text-sm rounded-md" type="text" bind:value={$search} placeholder="Search">
     </div>
 </div>
 <div class="py-3 px-3 flex items-center flex-align border-b-2 border-blue">
