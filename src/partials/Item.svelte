@@ -51,20 +51,22 @@
             <small on:click|self={setActive} class="font-bold"> - {item.notes}</small>
         {/if}
     </div>
-    <div on:click|self={setActive} class="mr-3">
-        {#if isDueSoon(item) }
+    <div on:click={setActive} class="mr-3">
+        {#if isDueSoon(item)}
             <span class="text-yellow">
                 due soon
             </span>
-        {/if}
-        {#if isDueNow(item) }
+        {:else if isDueNow(item)}
             <span class="text-yellow">
                 {getTimeRemaining(item.due).days - 1 === 0 ? 'due today' : 'due tomorrow'}
             </span>
-        {/if}
-        {#if isOverdue(item) }
+        {:else if isOverdue(item)}
             <span class="text-red">
                 <i class="fas fa-arrow-left"/> {getTimeRemaining(item.due).days - 1} day{getTimeRemaining(item.due).days - 1 !== 1 ? 's' : ''} ago
+            </span>
+        {:else if item.due}
+            <span>
+                <i class="fas fa-arrow-right"/> {getTimeRemaining(item.due).days} day{getTimeRemaining(item.due).days !== 1 ? 's' : ''}
             </span>
         {/if}
     </div>
