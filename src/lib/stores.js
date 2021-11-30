@@ -29,7 +29,7 @@ const clearQueryParam = (field) => {
 export const token = writable(browser && localStorage.getItem("token") ? localStorage.getItem("token") : null);
 export const principal = writable(null);
 export const lists = writable(null);
-export const search = writable(getQueryParam('search') ? getQueryParam('search') : null)
+export const search = writable(null)
 export const filter = writable(
     getQueryParam('filter') && Object.keys(filters).indexOf(getQueryParam('filter')) !== -1 ? 
     getQueryParam('filter') : 
@@ -55,13 +55,6 @@ if (browser) {
             return;
         }
         setQueryParam('filter', value);
-    });
-    search.subscribe((value) => {
-        if (value === null || value.trim() === '') {
-            clearQueryParam('search', null);
-            return;
-        }
-        setQueryParam('search', value.trim());
     });
     token.subscribe((value) => {
         if (value === null) { localStorage.removeItem("token"); return }

@@ -1,22 +1,23 @@
 <script>
     import Item from "./Item.svelte";
     import MenuOverlay from './MenuOverlay.svelte';
-    import { lists, fetchData, token, search } from '$lib/stores';
-    import { isOverdue, isDueNow, isDueSoon } from '$lib/days';
+    import { lists, fetchData, token, search, filter } from '$lib/stores';
     import { filters } from '$lib/dict';
 
     export let index;
 
     let subject = '';
     let notes = false;
-
-    search.subscribe(() => { 
-        // This is kinda kludgy. It may be better to add a debounce.
-        if (!document.getElementById('search')) { return; }
-        setTimeout(() => {
-            document.getElementById('search').focus(); 
-        }, 5);
-    })
+    let items = [];
+    $: {
+        search.subscribe(i => {
+            window.setTimeout(() => {
+                const allItems = $lists[index].items[$filter];
+                if (i === null || i.trim() === '') { items = allItems; return; }
+                items = allItems.filter(item => item.subject.toLowerCase().indexOf(i.toLowerCase()) !== -1)
+            }, 100)
+        })
+    }
 
     const showNotes = () => { notes = true; }
     const hideNotes = () => { notes = false; }
@@ -74,7 +75,7 @@
     </div>
 </div>
 <ul class="h-items my-3 overflow-auto">
-    {#each $lists[index].items[$filter] as item, i}
+    {#each items as item, i}
         <Item item={item} showNotes={notes}/>
     {/each}
 </ul>
