@@ -6,6 +6,7 @@ export const addTag = (tag, tags$) => {
     tags.set(tags$);
 }
 
-export const removeTag = (tag) => {
-    
+export const removeTag = (tag, tags$) => {
+    tags$ = tags$.filter(i => i !== tag);
+    tags.set(tags$);
 }

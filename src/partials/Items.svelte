@@ -16,9 +16,13 @@
     $: {
         search.subscribe(i => {
             window.setTimeout(() => {
-                const allItems = $lists[index].items[$filter];
-                if (i === null || i.trim() === '') { items = allItems; return; }
-                items = allItems.filter(item => item.subject.toLowerCase().indexOf(i.toLowerCase()) !== -1)
+                generateItems();
+            }, 100)
+        });
+
+        tags.subscribe(i => {
+            window.setTimeout(() => {
+                generateItems();
             }, 100)
         });
 
@@ -28,6 +32,19 @@
             .flatMap(i => i.split(','))
             .map(i => i.trim())
             .filter(unique);
+    }
+
+    const generateItems = () => {
+        let payload = $lists[index].items[$filter];
+        if ($search) {
+            payload = payload.filter(item => item.subject.toLowerCase().indexOf($search.toLowerCase()) !== -1)
+        }
+        if ($tags.length !== 0) {
+            $tags.forEach(tag => {
+                payload = payload.filter(i => i.tags && i.tags.indexOf(tag) !== -1);
+            });
+        }
+        items = payload;
     }
 
     const unique = (value, index, self) => {
