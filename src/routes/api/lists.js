@@ -1,5 +1,6 @@
 import db from '$lib/db';
 import jwt from 'jsonwebtoken';
+import { isDueNow, isDueSoon, isOverdue } from '../../lib/days';
 
 export const get = async request => {
     // Make sure the request is valid
@@ -11,10 +12,18 @@ export const get = async request => {
     if (lists.length === 0) { return {body: []} }
 
     for (let i = 0; i < lists.length; i++) {
+        const items = await db('items').where('listId', lists[i].id);
         lists[i] = {
             id: lists[i].id,
             name: lists[i].name,
-            items: await db('items').where('listId', lists[i].id)
+            items: {
+                ALL: items,
+                TODO: items.filter(i => i.status === 'TODO'),
+                NOW: items.filter(i => isDueNow(i)),
+                SOON: items.filter(i => isDueSoon(i)),
+                OVERDUE: items.filter(i => isOverdue(i)),
+                DONE: items.filter(i => i.status === 'DONE'),
+            }
         }
     }
     // Return

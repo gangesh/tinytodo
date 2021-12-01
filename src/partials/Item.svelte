@@ -2,11 +2,14 @@
     import { activeItem } from '$lib/stores';
     import MenuOverlay from '../partials/MenuOverlay.svelte';
     import Tooltip from '../partials/Tooltip.svelte';
-    import { token, fetchData } from '$lib/stores';
+    import { token, fetchData, tags } from '$lib/stores';
+    import { addTag } from '$lib/tags';
     import { getTimeRemaining, isOverdue, isDueNow, isDueSoon } from '$lib/days';
 
     export let item;
     export let showNotes = false;
+
+    let loading = false;
 
     let due = '';
     $: { 
@@ -19,7 +22,9 @@
         activeItem.set(item);
     }
 
-    async function setStatus() {
+    async function setStatus(e) {
+        loading = true;
+        e.preventDefault();
         const s = item.status === 'TODO' ? 'DONE' : 'TODO';
         let status = await fetch('/api/items', {
             method: 'PUT',
@@ -31,6 +36,10 @@
         }).then(i => i.json());
 
         fetchData($token);
+        
+        setTimeout(() => {
+            loading = false;
+        }, 500)
     }
 
     async function deleteItem() {
@@ -52,8 +61,19 @@
 
 <li on:click|self={setActive} class="group-scope border-b hover:bg-gray-dark border-gray-dark cursor-pointer p-2 flex">
     <div class="flex-1 font-light" on:click|self={setActive}>
-        <input type="checkbox" checked={item.status === 'DONE'} on:change={setStatus}> 
+        {#if loading}
+            <i class="fas fa-spinner fa-pulse"/>
+        {:else}
+            <input type="checkbox" checked={item.status === 'DONE'} on:click={setStatus}> 
+        {/if}
         <span on:click|self={setActive} class="{item.status === 'DONE' ? 'line-through' : ''}">{item.subject}</span>
+        {#if item.tags}
+            <small class="font-bold">
+                {#each item.tags.split(',') as tag, i}
+                    <span class="hover:opacity-80 underline" on:click={() => addTag(tag.trim(), $tags)}>{tag.trim()}</span>{i !== item.tags.split(',').length - 1 ? ', ' : ''}
+                {/each}
+            </small>
+        {/if}
         {#if showNotes && item.notes}
             <small on:click|self={setActive} class="font-bold"> - {item.notes}</small>
         {/if}
