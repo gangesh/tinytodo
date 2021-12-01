@@ -1,8 +1,9 @@
 <script>
     import Item from "./Item.svelte";
     import MenuOverlay from './MenuOverlay.svelte';
-    import { lists, fetchData, token } from '$lib/stores';
+    import { lists, fetchData, token, filter } from '$lib/stores';
     import { isOverdue, isDueNow, isDueSoon } from '$lib/days';
+    import { filters } from '$lib/dict';
 
     export let index;
 
@@ -41,14 +42,13 @@
 </div>
 <div class="py-3 px-3 flex items-center flex-align border-b-2 border-blue">
     {#if $lists[index]}
-        <h2 class="font-bold mr-2">{$lists[index].name} ({$lists[index].items.length})
+        <h2 class="font-bold mr-2">{filters[$filter]} ({$lists[index].items[$filter].length})
         <MenuOverlay dir={'left'}>
-            <p class="hover:opacity-40 cursor-pointer mb-1">All Tasks ({$lists[index].items.length})</p>
-            <p class="hover:opacity-40 cursor-pointer mb-1">To Do ({$lists[index].items.filter(i => i.status === 'TODO').length})</p>
-            <p class="hover:opacity-40 cursor-pointer mb-1">Overdue ({$lists[index].items.filter(i => isOverdue(i)).length})</p>
-            <p class="hover:opacity-40 cursor-pointer mb-1">Today / Tomorrow ({$lists[index].items.filter(i => isDueNow(i)).length})</p>
-            <p class="hover:opacity-40 cursor-pointer mb-1">Soon ({$lists[index].items.filter(i => isDueSoon(i)).length})</p>
-            <p class="hover:opacity-40 cursor-pointer">Done ({$lists[index].items.filter(i => i.status === 'DONE').length})</p>
+            {#each Object.keys(filters) as filter$, i}
+                <p on:click={() => filter.set(filter$)} class="hover:opacity-40 cursor-pointer {i === Object.keys(filters).length - 1 ? '' : 'mb-1'}">
+                    {filters[filter$]} ({$lists[index].items[filter$].length})
+                </p>
+            {/each}
         </MenuOverlay>
         </h2>
     {/if}
@@ -66,9 +66,7 @@
     </div>
 </div>
 <ul class="h-items my-3 overflow-auto">
-    {#if $lists[index]}
-        {#each $lists[index].items as item, i}
-            <Item item={item} showNotes={notes}/>
-        {/each}
-    {/if}
+    {#each $lists[index].items[$filter] as item, i}
+        <Item item={item} showNotes={notes}/>
+    {/each}
 </ul>
