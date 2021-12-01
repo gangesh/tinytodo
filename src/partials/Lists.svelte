@@ -2,7 +2,7 @@
     import MenuOverlay from './MenuOverlay.svelte';
     import { goto } from "$app/navigation";
     import { page } from "$app/stores";
-    import { lists, fetchData, token, filter, search } from '$lib/stores';
+    import { lists, fetchData, token, filter, search, tags } from '$lib/stores';
     import { browser } from "$app/env";
 
     let name = '';
@@ -13,6 +13,7 @@
     const navigate = (id) => {
         goto(`./${id}`, {replaceState: true});
         search.set(null);
+        tags.set([]);
         filter.set('ALL');
     }
 

@@ -1,22 +1,54 @@
 <script>
     import Item from "./Item.svelte";
     import MenuOverlay from './MenuOverlay.svelte';
-    import { lists, fetchData, token, search, filter } from '$lib/stores';
+    import { lists, fetchData, token, search, filter, tags } from '$lib/stores';
     import { filters } from '$lib/dict';
+    import { addTag } from '$lib/tags';
+    import Tags from './Tags.svelte';
 
     export let index;
 
     let subject = '';
     let notes = false;
     let items = [];
+    let tags$ = [];
+
     $: {
         search.subscribe(i => {
             window.setTimeout(() => {
-                const allItems = $lists[index].items[$filter];
-                if (i === null || i.trim() === '') { items = allItems; return; }
-                items = allItems.filter(item => item.subject.toLowerCase().indexOf(i.toLowerCase()) !== -1)
+                generateItems();
             }, 100)
-        })
+        });
+
+        tags.subscribe(i => {
+            window.setTimeout(() => {
+                generateItems();
+            }, 100)
+        });
+
+        tags$ = $lists[index].items[$filter]
+            .flatMap(i => i.tags)
+            .filter(i => i !== null)
+            .flatMap(i => i.split(','))
+            .map(i => i.trim())
+            .filter(unique);
+    }
+
+    const generateItems = () => {
+        let payload = $lists[index].items[$filter];
+        if ($search) {
+            payload = payload.filter(item => item.subject.toLowerCase().indexOf($search.toLowerCase()) !== -1)
+        }
+        if ($tags.length !== 0) {
+            $tags.forEach(tag => {
+                payload = payload.filter(i => i.tags && i.tags.indexOf(tag) !== -1);
+            });
+        }
+        items = payload;
+    }
+
+    const unique = (value, index, self) => {
+        return self.indexOf(value) === index
     }
 
     const showNotes = () => { notes = true; }
@@ -49,6 +81,7 @@
         <input id="search" class="border-gray-darkest border w-64 p-1 text-sm rounded-md" type="text" bind:value={$search} placeholder="Search">
     </div>
 </div>
+<Tags/>
 <div class="py-3 px-3 flex items-center flex-align border-b-2 border-blue">
     {#if $lists[index]}
         <h2 class="font-bold mr-2">{filters[$filter]} ({$lists[index].items[$filter].length})
@@ -69,7 +102,13 @@
     <div class="flex-1 text-right">
         <small>Tags 
             <MenuOverlay>
-                <p>No tags to filter by.</p>
+                {#if tags$.length !== 0}
+                    {#each tags$ as tag, i}
+                        <p on:click={() => addTag(tag.trim(), $tags)} class="hover:opacity-40 cursor-pointer mb-1">{tag.trim()}</p>
+                    {/each}
+                {:else}
+                    <p>No tags to filter by.</p>
+                {/if}
             </MenuOverlay>
         </small>
     </div>
