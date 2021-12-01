@@ -2,7 +2,7 @@
     import MenuOverlay from './MenuOverlay.svelte';
     import { goto } from "$app/navigation";
     import { page } from "$app/stores";
-    import { lists, fetchData, token, filter } from '$lib/stores';
+    import { lists, fetchData, token, filter, search } from '$lib/stores';
     import { browser } from "$app/env";
 
     let name = '';
@@ -12,7 +12,8 @@
 
     const navigate = (id) => {
         goto(`./${id}`, {replaceState: true});
-        // filter.set('ALL'); // Decided not to reset the filter when the tab is changed
+        search.set(null);
+        filter.set('ALL');
     }
 
     async function addList() {

@@ -1,20 +1,20 @@
 import { writable } from 'svelte/store';
 import { browser } from "$app/env";
-import { filters } from './dict';
 import { goto } from '$app/navigation';
+import { filters } from './dict';
 
 const getQueryParam = (field) => {
     if (!browser) { return null; }
     const urlParams = new URLSearchParams(window.location.search);
-    const hasParam = urlParams.get(field);
-    return hasParam ? urlParams.get(field) : null;
+    const hasParam = urlParams.get(field.trim());
+    return hasParam ? urlParams.get(field.trim()) : null;
 }
 
 const setQueryParam = (field, val) => {
     if (!browser) { return null; }
     const url = new URL(window.location);
-    if (url.searchParams.get(field) && url.searchParams.get(field) === val) { return; }
-    url.searchParams.set(field, val);
+    if (url.searchParams.get(field) && url.searchParams.get(field) === val.trim()) { return; }
+    url.searchParams.set(field, val.trim());
     return goto(`${url.toString()}`, { replaceState: true });
 }
 
@@ -29,6 +29,7 @@ const clearQueryParam = (field) => {
 export const token = writable(browser && localStorage.getItem("token") ? localStorage.getItem("token") : null);
 export const principal = writable(null);
 export const lists = writable(null);
+export const search = writable(null)
 export const filter = writable(
     getQueryParam('filter') && Object.keys(filters).indexOf(getQueryParam('filter')) !== -1 ? 
     getQueryParam('filter') : 
