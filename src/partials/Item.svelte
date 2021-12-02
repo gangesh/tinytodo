@@ -66,6 +66,13 @@
         {:else}
             <input type="checkbox" checked={item.status === 'DONE'} on:click={setStatus}> 
         {/if}
+        {#if item.priority === 2}
+            <span class="inline-block bg-red-lighter text-white px-1 font-bold text-sm">+2</span>
+        {:else if item.priority === 1}
+            <span class="inline-block bg-orange text-white px-1 font-bold text-sm">+1</span>
+        {:else if item.priority === -1}
+            <span class="inline-block bg-blue-darker text-white px-1 font-bold text-sm">-1</span>
+        {/if}
         <span on:click|self={setActive} class="{item.status === 'DONE' ? 'line-through' : ''}">{item.subject}</span>
         {#if item.tags}
             <small class="font-bold">

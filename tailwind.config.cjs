@@ -15,7 +15,7 @@ module.exports = {
     },
     extend: {
       height: {
-        'items': 'calc(100vh - 252px)',
+        'items': 'calc(100vh - 230px)',
       }
     },
     colors: {
@@ -29,11 +29,16 @@ module.exports = {
       yellow: {
         DEFAULT: 'goldenrod'
       },
+      orange: {
+        DEFAULT: '#ff7700'
+      },
       red: {
-        DEFAULT: '#A52A2A'
+        DEFAULT: '#A52A2A',
+        lighter: '#ff3333'
       },
       blue: {
-        DEFAULT: '#b5d5ff'
+        DEFAULT: '#b5d5ff',
+        darker: '#3377ff'
       },
       gray: {
         DEFAULT: '#fbfbfb',
@@ -51,12 +56,9 @@ module.exports = {
     }
   },
   variants: {
-    variants: {
-      // Now you can use nested groups for example in backgroundColor and textColor for hover and focus
-      backgroundColor: ['responsive', 'hover', 'focus', 'group-hover', 'group-focus'],
-      textColor: ["responsive", "hover", "focus", "group-hover", "group-focus"],
+    extend: {
+      'display': ['group-hover']
     },
-    extend: {},
   },
   plugins: [
     require("tailwindcss-nested-groups")
