@@ -16,6 +16,7 @@ export const get = async request => {
         lists[i] = {
             id: lists[i].id,
             name: lists[i].name,
+            order: lists[i].order,
             items: {
                 ALL: items,
                 TODO: items.filter(i => i.status === 'TODO'),

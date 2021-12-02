@@ -40,11 +40,10 @@
     <input type="date" placeholder="Due Date" class="block w-full p-2 border border-gray-darkest my-3" bind:value={item.due}>
     <input type="text" placeholder="Tags (comma-separated)" class="block w-full p-2 border border-gray-darkest my-3" bind:value={item.tags}>
     <select class="block w-full p-2 border border-gray-darkest my-3" bind:value={item.priority}>
-        <option value="{2}">+1</option>
+        <option value="{2}">+2</option>
         <option value="{1}">+1</option>
         <option value="{0}">0</option>
         <option value="{-1}">-1</option>
-        <option value="{-2}">-2</option>
     </select>
     <select class="block w-full p-2 border border-gray-darkest my-3" bind:value={item.listId}>
         {#each $lists as list, i}
