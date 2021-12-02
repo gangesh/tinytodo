@@ -13,10 +13,12 @@ export const get = async request => {
 
     for (let i = 0; i < lists.length; i++) {
         const items = await db('items').where('listId', lists[i].id);
+        const settings = await db('settings').where('userId', token.id);
         lists[i] = {
             id: lists[i].id,
             name: lists[i].name,
             order: lists[i].order,
+            settings,
             items: {
                 ALL: items,
                 TODO: items.filter(i => i.status === 'TODO'),
