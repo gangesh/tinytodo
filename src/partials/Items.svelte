@@ -15,23 +15,25 @@
 
     $: {
         search.subscribe(i => {
+            if (!$lists[index]) { return; }
             window.setTimeout(() => {
                 generateItems();
             }, 100)
         });
 
         tags.subscribe(i => {
+            if (!$lists[index]) { return; }
             window.setTimeout(() => {
                 generateItems();
             }, 100)
         });
 
-        tags$ = $lists[index].items[$filter]
+        tags$ = $lists[index]?.items[$filter]
             .flatMap(i => i.tags)
             .filter(i => i !== null)
             .flatMap(i => i.split(','))
             .map(i => i.trim())
-            .filter(unique);
+            .filter(unique) || [];
     }
 
     const generateItems = () => {
