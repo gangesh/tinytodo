@@ -23,7 +23,7 @@ CREATE TABLE `items` (
   `updatedOn` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `listId` (`listId`),
-  CONSTRAINT `items_ibfk_1` FOREIGN KEY (`listId`) REFERENCES `lists` (`id`)
+  CONSTRAINT `items_ibfk_2` FOREIGN KEY (`listId`) REFERENCES `lists` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
@@ -34,7 +34,7 @@ CREATE TABLE `lists` (
   `order` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'CREATED',
   PRIMARY KEY (`id`),
   KEY `userId` (`userId`),
-  CONSTRAINT `lists_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`id`)
+  CONSTRAINT `lists_ibfk_2` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
@@ -50,7 +50,7 @@ CREATE TABLE `settings` (
   `defaultOrder` varchar(64) NOT NULL DEFAULT 'CREATED',
   PRIMARY KEY (`id`),
   KEY `userId` (`userId`),
-  CONSTRAINT `settings_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`id`)
+  CONSTRAINT `settings_ibfk_2` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
@@ -62,4 +62,4 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
--- 2021-12-02 20:28:42
+-- 2021-12-02 21:07:05

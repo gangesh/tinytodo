@@ -2,8 +2,7 @@
     import MenuOverlay from './MenuOverlay.svelte';
     import { goto } from "$app/navigation";
     import { page } from "$app/stores";
-    import { lists, fetchData, token, filter, search, tags } from '$lib/stores';
-    import { browser } from "$app/env";
+    import { lists, fetchData, token, filter, search, tags, settings } from '$lib/stores';
 
     let name = '';
     let token$ = null;
@@ -25,7 +24,7 @@
                 'Content-Type': 'application/json',
                 'Authorization': token$
             },
-            body: JSON.stringify({name})
+            body: JSON.stringify({name, order: $settings.defaultOrder})
         }).then(i => i.json());
 
         name = '';

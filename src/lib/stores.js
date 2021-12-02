@@ -29,6 +29,7 @@ const clearQueryParam = (field) => {
 export const token = writable(browser && localStorage.getItem("token") ? localStorage.getItem("token") : null);
 export const principal = writable(null);
 export const lists = writable(null);
+export const settings = writable(null);
 export const search = writable(null);
 export const tags = writable([]);
 export const filter = writable(
@@ -49,6 +50,16 @@ export async function fetchData(token) {
     lists.set(lists$);
 }
 
+export async function fetchSettings(token) {
+    const settings$ = await fetch('/api/settings', {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token
+        }
+    }).then(i => i.json());
+    settings.set(settings$);
+}
+
 if (browser) {
     filter.subscribe((value) => {
         if (value === null || value === 'ALL') {
@@ -60,6 +71,7 @@ if (browser) {
     token.subscribe((value) => {
         if (value === null) { localStorage.removeItem("token"); return }
         localStorage.setItem("token", value);
+        fetchSettings(value);
         fetchData(value);
     });
 }
