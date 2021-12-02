@@ -1,112 +1,45 @@
--- phpMyAdmin SQL Dump
--- version 5.1.1
--- https://www.phpmyadmin.net/
---
--- Host: localhost
--- Generation Time: Nov 24, 2021 at 04:38 AM
--- Server version: 10.4.21-MariaDB
--- PHP Version: 7.4.24
+-- Adminer 4.8.1 MySQL 8.0.27 dump
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
+SET NAMES utf8;
+SET time_zone = '+00:00';
+SET foreign_key_checks = 0;
+SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
+SET NAMES utf8mb4;
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Database: `mytinytodo`
---
-
--- --------------------------------------------------------
-
---
--- Table structure for table `items`
---
+CREATE DATABASE `mytinytodo` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `mytinytodo`;
 
 CREATE TABLE `items` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `subject` varchar(64) NOT NULL,
   `notes` varchar(64) DEFAULT NULL,
-  `priority` int(11) NOT NULL DEFAULT 0,
+  `priority` int NOT NULL DEFAULT '0',
   `status` varchar(64) NOT NULL DEFAULT 'TODO',
   `tags` varchar(64) DEFAULT NULL,
   `due` varchar(64) DEFAULT NULL,
-  `listId` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `listId` int NOT NULL,
+  `createdOn` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `updatedOn` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `lists`
---
 
 CREATE TABLE `lists` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(64) NOT NULL,
-  `userId` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `userId` int NOT NULL,
+  `order` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'CREATED',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `users`
---
 
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `email` varchar(64) NOT NULL,
-  `password` varchar(256) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `password` varchar(256) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Indexes for dumped tables
---
 
---
--- Indexes for table `items`
---
-ALTER TABLE `items`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `lists`
---
-ALTER TABLE `lists`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `items`
---
-ALTER TABLE `items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `lists`
---
-ALTER TABLE `lists`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+-- 2021-12-02 17:52:41

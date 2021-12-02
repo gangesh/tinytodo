@@ -49,6 +49,20 @@
         fetchData($token);
     }
 
+    async function setSort(list, order) {
+        
+        let orderList = await fetch('/api/lists', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': $token
+            },
+            body: JSON.stringify({id: list.id, order})
+        }).then(i => i.json());
+
+        fetchData($token);
+    }
+
     async function deleteList(list) {
         const c = confirm("Are you sure you want to delete this list?");
         if (!c) { return }
@@ -88,13 +102,13 @@
                     <hr>
                     <p class="hover:opacity-40 cursor-pointer mt-1 mb-1">Publish RSS feed</p>
                     <hr>
-                    <p class="hover:opacity-40 cursor-pointer mt-1 mb-1">Sort by hand</p>
-                    <p class="hover:opacity-40 cursor-pointer mb-1">Sort by date created</p>
-                    <p class="hover:opacity-40 cursor-pointer mb-1">Sort by priority</p>
-                    <p class="hover:opacity-40 cursor-pointer mb-1">Sort by due date</p>
-                    <p class="hover:opacity-40 cursor-pointer mb-1">Sort by date modified</p>
-                    <hr>
-                    <p class="hover:opacity-40 cursor-pointer mt-1">Hide completed tasks</p>
+                    <!-- <p class="hover:opacity-40 cursor-pointer mt-1 mb-1">Sort by hand</p> -->
+                    <p on:click={() => setSort(list, 'CREATED')} class="hover:opacity-40 cursor-pointer mb-1 mt-1"><input class="pointer-events-none" checked={list.order === 'CREATED'} type="radio"> Sort by date created</p>
+                    <p on:click={() => setSort(list, 'PRIORITY')} class="hover:opacity-40 cursor-pointer mb-1"><input class="pointer-events-none" checked={list.order === 'PRIORITY'} type="radio"> Sort by priority</p>
+                    <p on:click={() => setSort(list, 'DUE')} class="hover:opacity-40 cursor-pointer mb-1"><input class="pointer-events-none" checked={list.order === 'DUE'} type="radio"> Sort by due date</p>
+                    <p on:click={() => setSort(list, 'MODIFIED')} class="hover:opacity-40 cursor-pointer"><input class="pointer-events-none" checked={list.order === 'MODIFIED'} type="radio"> Sort by date modified</p>
+                    <!-- <hr> -->
+                    <!-- <p class="hover:opacity-40 cursor-pointer mt-1">Hide completed tasks</p> -->
                 </MenuOverlay>
             </div>
         </li>

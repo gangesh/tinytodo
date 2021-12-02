@@ -5,6 +5,7 @@
     import { filters } from '$lib/dict';
     import { addTag } from '$lib/tags';
     import Tags from './Tags.svelte';
+    import { sort } from "$lib/sort";
 
     export let index;
 
@@ -46,6 +47,7 @@
                 payload = payload.filter(i => i.tags && i.tags.indexOf(tag) !== -1);
             });
         }
+        payload = sort(payload, $lists[index].order);
         items = payload;
     }
 
