@@ -1,14 +1,17 @@
 <script>
-    import { token, settings } from '$lib/stores';
+    import { token, settings, loading } from '$lib/stores';
 </script>
 
 <header class="flex mb-3 mt-2">
     <div class="mr-3">
-        {#if $settings.title == null}
-            <h1 class="text-2xl font-bold"><i class="fas fa-spinner fa-pulse"/> loading...</h1>
-        {:else}
-            <h1 class="text-2xl font-bold">{$settings.title}</h1>
-        {/if}
+            <h1 class="text-2xl font-bold">
+                {#if $settings.title == null}
+                    myTinyTodo
+                {:else}
+                    {$settings.title}
+                {/if}
+                {#if $loading}<i class="fas fa-spinner fa-pulse"/>{/if}
+            </h1>        
     </div>
     <div class="border-b border-blue flex-1 text-right">
         {#if $token}
