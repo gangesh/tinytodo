@@ -1,7 +1,7 @@
 <script>
     import Item from "./Item.svelte";
     import MenuOverlay from './MenuOverlay.svelte';
-    import { lists, fetchData, token, search, filter, tags } from '$lib/stores';
+    import { lists, fetchData, token, search, filter, tags, settings } from '$lib/stores';
     import { filters } from '$lib/dict';
     import { addTag } from '$lib/tags';
     import Tags from './Tags.svelte';
@@ -60,13 +60,14 @@
 
     async function addItem() {
         if (subject.trim() === '') { return }
+        const appendTags = $settings.autoTagging == 'true' ? $tags.join(', ') : '';
         let newItem = await fetch('/api/items', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': $token
             },
-            body: JSON.stringify({subject, listId: $lists[index].id})
+            body: JSON.stringify({subject, tags: appendTags, listId: $lists[index].id})
         }).then(i => i.json());
 
         subject = '';

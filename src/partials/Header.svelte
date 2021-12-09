@@ -4,6 +4,7 @@
 
 <header class="flex mb-3 mt-2">
     <div class="mr-3">
+        <a href="/">
             <h1 class="text-2xl font-bold">
                 {#if $settings.title == null}
                     myTinyTodo
@@ -11,7 +12,8 @@
                     {$settings.title}
                 {/if}
                 {#if $loading}<i class="fas fa-spinner fa-pulse"/>{/if}
-            </h1>        
+            </h1>
+        </a> 
     </div>
     <div class="border-b border-blue flex-1 text-right">
         {#if $token}
