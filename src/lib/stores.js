@@ -29,7 +29,7 @@ const clearQueryParam = (field) => {
 export const token = writable(browser && localStorage.getItem("token") ? localStorage.getItem("token") : null);
 export const principal = writable(null);
 export const lists = writable(null);
-export const settings = writable(null);
+export const settings = writable({});
 export const search = writable(null);
 export const tags = writable([]);
 export const filter = writable(

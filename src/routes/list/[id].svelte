@@ -30,8 +30,6 @@
                 <Items index={page$.params.id}/>
             {/if}
         </div>
-    {:else}
-        <p>Loading...</p>
     {/if}
 </div>
 
