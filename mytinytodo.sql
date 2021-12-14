@@ -46,7 +46,7 @@ CREATE TABLE `settings` (
   `autoTagging` varchar(64) NOT NULL DEFAULT 'false',
   `timezone` varchar(64) NOT NULL DEFAULT 'UTC',
   `firstDayOfWeek` varchar(64) NOT NULL DEFAULT 'MON',
-  `dateFormat` varchar(64) NOT NULL DEFAULT 'j M Y',
+  `dateFormat` varchar(64) NOT NULL DEFAULT 'L',
   `defaultOrder` varchar(64) NOT NULL DEFAULT 'CREATED',
   PRIMARY KEY (`id`),
   KEY `userId` (`userId`),
