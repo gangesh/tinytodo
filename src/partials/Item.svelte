@@ -121,28 +121,17 @@
 			<span class="text-yellow"> due soon </span>
 		{:else if isDueNow(item)}
 			<span class="text-yellow">
-				{getTimeRemaining(item.due).days - 1 === 0
-					? "due today"
-					: "due tomorrow"}
+				due in {getTimeRemaining(item.due, true)}
 			</span>
 		{:else if isOverdue(item)}
 			<span class="text-red">
 				<i class="fas fa-arrow-left" />
-				{getTimeRemaining(item.due).days - 1} day{getTimeRemaining(
-					item.due
-				).days -
-					1 !==
-				1
-					? "s"
-					: ""} ago
+				due {getTimeRemaining(item.due)}
 			</span>
-		{:else if item.due}
+		{:else if item.due && item.status === "TODO"}
 			<span>
 				<i class="fas fa-arrow-right" />
-				{getTimeRemaining(item.due).days} day{getTimeRemaining(item.due)
-					.days !== 1
-					? "s"
-					: ""}
+				{getTimeRemaining(item.due, true)}
 			</span>
 		{/if}
 		{#if item.due}
