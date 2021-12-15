@@ -1,84 +1,78 @@
 <script>
-	import {
-		token,
-		activeItem,
-		lists,
-		fetchData,
-		activeList,
-	} from "$lib/stores";
+	import { token, lists, fetchData, activeList } from "$lib/stores";
+	import { getList } from "$lib/lists";
 
-	// let item;
+	lists.subscribe((lists) => {
+		console.log("UPDATE", lists);
+		const list = getList(lists, $activeList.id);
+		console.log("LIST", list);
+		activeList.set(list);
+	});
 
-	// activeItem.subscribe(
-	// 	(activeItem) => (item = Object.assign({}, activeItem))
-	// );
+	async function addGuest() {
+		const p = prompt("Enter the email address of a tinytodo user", "");
+		if (!p) {
+			return;
+		}
 
-	$: {
-		console.log("activeList", $activeList);
+		let newGuest = await fetch("/api/guests", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: $token,
+			},
+			body: JSON.stringify({ email: p, listId: $activeList.id }),
+		}).then((i) => i.json());
+
+		fetchData($token);
 	}
 
-	async function updateSharing() {
-		// 	let update = await fetch("/api/items", {
-		// 		method: "PUT",
-		// 		headers: {
-		// 			"Content-Type": "application/json",
-		// 			Authorization: $token,
-		// 		},
-		// 		body: JSON.stringify(item),
-		// 	}).then((i) => i.json());
-		// 	fetchData($token);
-		// 	activeItem.set(null);
+	async function deleteGuest(guest) {
+		const c = confirm(
+			`Are you sure you want to revoke ${guest.email}'s' access to ${$activeList.name}?`
+		);
+		if (!c) {
+			return;
+		}
+
+		let deleteGuest = await fetch("/api/guests", {
+			method: "DELETE",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: $token,
+			},
+			body: JSON.stringify({
+				userId: guest.id,
+				listId: $activeList.id,
+			}),
+		}).then((i) => i.json());
+
+		fetchData($token);
 	}
 </script>
 
-<form on:submit|preventDefault={updateSharing}>
-	<!-- <input
-		type="text"
-		placeholder="Subject"
-		class="block w-full p-2 border border-gray-darkest my-3"
-		bind:value={item.subject}
-	/>
-	<textarea
-		placeholder="Notes"
-		rows="5"
-		class="block w-full p-2 border border-gray-darkest my-3"
-		bind:value={item.notes}
-	/>
-	<select
-		class="block w-full p-2 border border-gray-darkest my-3"
-		bind:value={item.status}
-	>
-		<option value="TODO">To Do</option>
-		<option value="DONE">Done</option>
-	</select>
-	<input
-		type="date"
-		placeholder="Due Date"
-		class="block w-full p-2 border border-gray-darkest my-3"
-		bind:value={item.due}
-	/>
-	<input
-		type="text"
-		placeholder="Tags (comma-separated)"
-		class="block w-full p-2 border border-gray-darkest my-3"
-		bind:value={item.tags}
-	/>
-	<select
-		class="block w-full p-2 border border-gray-darkest my-3"
-		bind:value={item.priority}
-	>
-		<option value={2}>+2</option>
-		<option value={1}>+1</option>
-		<option value={0}>0</option>
-		<option value={-1}>-1</option>
-	</select>
-	<select
-		class="block w-full p-2 border border-gray-darkest my-3"
-		bind:value={item.listId}
-	>
-		{#each $lists as list, i}
-			<option value={list.id}>{list.name}</option>
+<p class="font-bold">{$activeList.name}</p>
+<p>Owner: {$activeList.owner}</p>
+
+{#if $activeList.guests.length > 0}
+	<table class="w-full my-6">
+		<tr>
+			<th class="text-left">Email</th>
+			<th class="text-left">Role</th>
+			<th class="text-left" />
+		</tr>
+		{#each $activeList.guests as guest}
+			<tr>
+				<td class="text-xs">{guest.email}</td>
+				<td class="text-xs">{guest.role}</td>
+				<td class="text-xs">
+					<button on:click={() => deleteGuest(guest)} class="text-red"
+						>revoke</button
+					>
+				</td>
+			</tr>
 		{/each}
-	</select>
-	<button type="submit" class="mt-3">Submit</button><br /><br /> -->
-</form>
+	</table>
+{/if}
+
+<button on:click={() => addGuest()}>Add Guest</button>

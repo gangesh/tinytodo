@@ -21,10 +21,7 @@
 	};
 
 	async function renameList(list) {
-		const p = prompt(
-			"Are you sure you want to delete this list?",
-			list.name
-		);
+		const p = prompt("What would you like to call this list?", list.name);
 		if (!p) {
 			return;
 		}

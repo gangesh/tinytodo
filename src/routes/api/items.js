@@ -41,7 +41,7 @@ export const del = async request => {
     if (!token) { return { status: 403 } }
     if (!request.body.id) { return { status: 400 } }
     // Perform the action
-    let item = await db('items').where('id', request.body.id).del()
+    let item = await db('guests').where('id', request.body.id).del()
     // Return
     return {
         body: { status: 'success' }
