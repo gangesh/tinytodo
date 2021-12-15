@@ -67,7 +67,10 @@
 		class="block w-full p-2 border border-gray-darkest my-3"
 		bind:value={item.listId}
 	>
-		{#each $lists as list, i}
+		{#each $lists["mine"] as list, i}
+			<option value={list.id}>{list.name}</option>
+		{/each}
+		{#each $lists["shared"] as list, i}
 			<option value={list.id}>{list.name}</option>
 		{/each}
 	</select>

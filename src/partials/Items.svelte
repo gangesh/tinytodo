@@ -10,12 +10,13 @@
 		tags,
 		settings,
 	} from "$lib/stores";
+	import { getList } from "$lib/lists";
 	import { filters } from "$lib/dict";
 	import { addTag } from "$lib/tags";
 	import Tags from "./Tags.svelte";
 	import { sort } from "$lib/sort";
 
-	export let index;
+	export let listId;
 
 	let subject = "";
 	let notes = false;
@@ -24,7 +25,7 @@
 
 	$: {
 		search.subscribe((i) => {
-			if (!$lists[index]) {
+			if (!getList($lists, listId)) {
 				return;
 			}
 			window.setTimeout(() => {
@@ -33,7 +34,7 @@
 		});
 
 		tags.subscribe((i) => {
-			if (!$lists[index]) {
+			if (!getList($lists, listId)) {
 				return;
 			}
 			window.setTimeout(() => {
@@ -42,8 +43,8 @@
 		});
 
 		tags$ =
-			$lists[index]?.items[$filter]
-				.flatMap((i) => i.tags)
+			getList($lists, listId)
+				?.items[$filter].flatMap((i) => i.tags)
 				.filter((i) => i !== null && i !== "")
 				.flatMap((i) => i.split(","))
 				.map((i) => i.trim())
@@ -51,7 +52,7 @@
 	}
 
 	const generateItems = () => {
-		let payload = $lists[index].items[$filter];
+		let payload = getList($lists, listId).items[$filter];
 		if ($search) {
 			payload = payload.filter(
 				(item) =>
@@ -67,7 +68,7 @@
 				);
 			});
 		}
-		payload = sort(payload, $lists[index].order);
+		payload = sort(payload, getList($lists, listId).order);
 		items = payload;
 	};
 
@@ -97,7 +98,7 @@
 			body: JSON.stringify({
 				subject,
 				tags: appendTags,
-				listId: $lists[index].id,
+				listId: getList($lists, listId).id,
 			}),
 		}).then((i) => i.json());
 
@@ -132,9 +133,9 @@
 </div>
 <Tags />
 <div class="py-3 px-3 flex items-center flex-align border-b-2 border-blue">
-	{#if $lists[index]}
+	{#if getList($lists, listId)}
 		<h2 class="font-bold mr-2">
-			{filters[$filter]} ({$lists[index].items[$filter].length})
+			{filters[$filter]} ({getList($lists, listId).items[$filter].length})
 			<MenuOverlay dir={"left"}>
 				{#each Object.keys(filters) as filter$, i}
 					<p
@@ -144,8 +145,9 @@
 							? ''
 							: 'mb-1'}"
 					>
-						{filters[filter$]} ({$lists[index].items[filter$]
-							.length})
+						{filters[filter$]} ({getList($lists, listId).items[
+							filter$
+						].length})
 					</p>
 				{/each}
 			</MenuOverlay>

@@ -35,7 +35,7 @@
 >
 	{#if $store}
 		<div class="flex items-center">
-			<h2 class="font-bold">{name}</h2>
+			<h2 class="font-bold text-blue-darker text-2xl">{name}</h2>
 			<div class="flex-1 text-right">
 				<i
 					on:click={close}

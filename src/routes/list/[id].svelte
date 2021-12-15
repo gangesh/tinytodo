@@ -38,7 +38,7 @@
 		</div>
 		<div class="flex-1">
 			{#if $lists.length !== 0}
-				<Items index={page$.params.id} />
+				<Items listId={page$.params.id} />
 			{/if}
 		</div>
 	{/if}

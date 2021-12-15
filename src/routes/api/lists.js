@@ -10,7 +10,7 @@ const mapGuests = async (guests) => {
     return guests;
 }
 
-const mapList = async (list) => {
+const mapList = async (list, globalIndex) => {
     const items = await db('items').where('listId', list.id);
     const owner = await db('users').where('id', list.userId);
     const guests = await db('guests').where('listId', list.id);
