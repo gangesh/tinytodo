@@ -30,16 +30,18 @@ export const loading = writable(false);
 export const token = writable(browser && localStorage.getItem("token") ? localStorage.getItem("token") : null);
 export const principal = writable(null);
 export const lists = writable(null);
-export const settings = writable({title: 'myTinyTodo'});
+export const settings = writable({ title: 'myTinyTodo' });
 export const search = writable(null);
 export const tags = writable([]);
 export const filter = writable(
-    getQueryParam('filter') && Object.keys(filters).indexOf(getQueryParam('filter')) !== -1 ? 
-    getQueryParam('filter') : 
-    'ALL'
+    getQueryParam('filter') && Object.keys(filters).indexOf(getQueryParam('filter')) !== -1 ?
+        getQueryParam('filter') :
+        'ALL'
 );
 
 export const activeItem = writable(null);
+export const activeList = writable(null);
+export const activeSettings = writable(null);
 
 export async function fetchData(token) {
     loading.set(true);

@@ -1,40 +1,30 @@
 <script>
-	import { settings, token, fetchSettings } from "$lib/stores";
+	import { token, fetchSettings, activeSettings } from "$lib/stores";
 	import moment from "moment";
 
-	let tempSettings = {};
-	settings.subscribe((settings) => {
-		tempSettings = Object.assign({}, settings);
-	});
-
-	async function handleUpdate() {
+	async function updateSettings() {
 		let update = await fetch("/api/settings", {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json",
 				Authorization: $token,
 			},
-			body: JSON.stringify(tempSettings),
+			body: JSON.stringify($activeSettings),
 		}).then((i) => i.json());
 
 		fetchSettings($token);
+		activeSettings.set(null);
 	}
 </script>
 
-<form
-	on:submit|preventDefault={handleUpdate}
-	class="border border-gray-darkest p-3"
->
-	<h1 class="font-bold text-xl">Settings</h1>
-	<br />
-
+<form on:submit|preventDefault={updateSettings}>
 	<small class="block font-bold">Site Title:</small>
 	<small class="block text-xs font-light"
 		>(specify if you want to change default title)</small
 	>
 	<input
 		type="text"
-		bind:value={tempSettings.title}
+		bind:value={$activeSettings.title}
 		placeholder="Site Title"
 		class="block w-64 p-2 border border-gray-darkest my-3"
 	/>
@@ -53,7 +43,7 @@
 	>
 	<select
 		class="block w-64 p-2 border border-gray-darkest my-3"
-		bind:value={tempSettings.autoTagging}
+		bind:value={$activeSettings.autoTagging}
 	>
 		<option value="true">Yes</option>
 		<option value="false">No</option>
@@ -85,13 +75,61 @@
 	>
 	<input
 		type="text"
-		bind:value={tempSettings.dateFormat}
+		bind:value={$activeSettings.dateFormat}
 		placeholder="Date Format"
 		class="block w-64 p-2 border border-gray-darkest my-3"
 	/>
 	Example Date:
-	<b>{moment().locale("en").format(tempSettings.dateFormat)}</b><br />
+	<b>{moment().locale("en").format($activeSettings.dateFormat)}</b><br />
 
 	<button type="submit" class="mt-3">Submit</button><br /><br />
-	<a href="../"><i class="fas fa-arrow-left" /> Go back</a>
+	<!-- <input
+		type="text"
+		placeholder="Subject"
+		class="block w-full p-2 border border-gray-darkest my-3"
+		bind:value={item.subject}
+	/>
+	<textarea
+		placeholder="Notes"
+		rows="5"
+		class="block w-full p-2 border border-gray-darkest my-3"
+		bind:value={item.notes}
+	/>
+	<select
+		class="block w-full p-2 border border-gray-darkest my-3"
+		bind:value={item.status}
+	>
+		<option value="TODO">To Do</option>
+		<option value="DONE">Done</option>
+	</select>
+	<input
+		type="date"
+		placeholder="Due Date"
+		class="block w-full p-2 border border-gray-darkest my-3"
+		bind:value={item.due}
+	/>
+	<input
+		type="text"
+		placeholder="Tags (comma-separated)"
+		class="block w-full p-2 border border-gray-darkest my-3"
+		bind:value={item.tags}
+	/>
+	<select
+		class="block w-full p-2 border border-gray-darkest my-3"
+		bind:value={item.priority}
+	>
+		<option value={2}>+2</option>
+		<option value={1}>+1</option>
+		<option value={0}>0</option>
+		<option value={-1}>-1</option>
+	</select>
+	<select
+		class="block w-full p-2 border border-gray-darkest my-3"
+		bind:value={item.listId}
+	>
+		{#each $lists as list, i}
+			<option value={list.id}>{list.name}</option>
+		{/each}
+	</select>
+	<button type="submit" class="mt-3">Submit</button><br /><br /> -->
 </form>
