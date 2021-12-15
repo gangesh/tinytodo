@@ -1,11 +1,21 @@
 <script>
-	import { token, activeItem, lists, fetchData } from "$lib/stores";
+	import {
+		token,
+		activeItem,
+		lists,
+		fetchData,
+		activeList,
+	} from "$lib/stores";
 
 	// let item;
 
 	// activeItem.subscribe(
 	// 	(activeItem) => (item = Object.assign({}, activeItem))
 	// );
+
+	$: {
+		console.log("activeList", $activeList);
+	}
 
 	async function updateSharing() {
 		// 	let update = await fetch("/api/items", {

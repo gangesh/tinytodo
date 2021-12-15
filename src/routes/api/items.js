@@ -3,9 +3,9 @@ import jwt from 'jsonwebtoken';
 
 export const post = async request => {
     // Make sure the request is valid
-    if (!request.headers.authorization) { return {status: 403} }
+    if (!request.headers.authorization) { return { status: 403 } }
     const token = jwt.verify(request.headers.authorization, import.meta.env.VITE_PWD_SALT);
-    if (!token) { return {status: 403} }
+    if (!token) { return { status: 403 } }
     // Perform the action
     request.body.createdOn = new Date().getTime();
     request.body.updatedOn = new Date().getTime();
@@ -18,13 +18,13 @@ export const post = async request => {
 
 export const put = async request => {
     // Make sure the request is valid
-    if (!request.headers.authorization) { return {status: 403} }
+    if (!request.headers.authorization) { return { status: 403 } }
     const token = jwt.verify(request.headers.authorization, import.meta.env.VITE_PWD_SALT);
-    if (!token) { return {status: 403} }
-    if (!request.body.id) { return {status: 400}  }
+    if (!token) { return { status: 403 } }
+    if (!request.body.id) { return { status: 400 } }
     // Perform the action
     let item = await db('items').where('id', request.body.id);
-    if (!item || item.length !== 1) { return {status: 412} }
+    if (!item || item.length !== 1) { return { status: 412 } }
     const payload = Object.assign(item[0], request.body);
     payload.updatedOn = new Date().getTime();
     let newItem = await db('items').where('id', request.body.id).update(payload);
@@ -36,14 +36,14 @@ export const put = async request => {
 
 export const del = async request => {
     // Make sure the request is valid
-    if (!request.headers.authorization) { return {status: 403} }
+    if (!request.headers.authorization) { return { status: 403 } }
     const token = jwt.verify(request.headers.authorization, import.meta.env.VITE_PWD_SALT);
-    if (!token) { return {status: 403} }
-    if (!request.body.id) { return {status: 400}  }
+    if (!token) { return { status: 403 } }
+    if (!request.body.id) { return { status: 400 } }
     // Perform the action
     let item = await db('items').where('id', request.body.id).del()
     // Return
     return {
-        body: {status: 'success'}
+        body: { status: 'success' }
     }
 }
