@@ -5,7 +5,7 @@ import bcrypt from 'bcryptjs';
 export const put = async request => {
     // Make sure the request is valid
     if (!request.body.email || !request.body.password) { return {status: 403} }
-    const users = await db('users').where('email', request.body.email)
+    const users = await db('users').where('email', request.body.email);
     if (users.length !== 0) { return {status: 409} }
     // Perform the action
     const salt = bcrypt.genSaltSync(10);
@@ -16,6 +16,7 @@ export const put = async request => {
 
     request.body.id = user[0];
     const token = jwt.sign(request.body, import.meta.env.VITE_PWD_SALT);
+    const settings = await db('settings').insert({userId: request.body.id});
     // Return
     return {
         body: {

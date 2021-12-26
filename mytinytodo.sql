@@ -10,6 +10,19 @@ SET NAMES utf8mb4;
 CREATE DATABASE `mytinytodo` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `mytinytodo`;
 
+CREATE TABLE `guests` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `listId` int NOT NULL,
+  `userId` int NOT NULL,
+  `role` varchar(64) NOT NULL DEFAULT 'ADMIN',
+  PRIMARY KEY (`id`),
+  KEY `listId` (`listId`),
+  KEY `userId` (`userId`),
+  CONSTRAINT `guests_ibfk_4` FOREIGN KEY (`listId`) REFERENCES `lists` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
+  CONSTRAINT `guests_ibfk_5` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
 CREATE TABLE `items` (
   `id` int NOT NULL AUTO_INCREMENT,
   `subject` varchar(64) NOT NULL,
@@ -21,7 +34,9 @@ CREATE TABLE `items` (
   `listId` int NOT NULL,
   `createdOn` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `updatedOn` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `listId` (`listId`),
+  CONSTRAINT `items_ibfk_2` FOREIGN KEY (`listId`) REFERENCES `lists` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
@@ -30,7 +45,25 @@ CREATE TABLE `lists` (
   `name` varchar(64) NOT NULL,
   `userId` int NOT NULL,
   `order` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'CREATED',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `userId` (`userId`),
+  CONSTRAINT `lists_ibfk_2` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+CREATE TABLE `settings` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `userId` int NOT NULL,
+  `title` varchar(64) NOT NULL DEFAULT 'myTinyTodo',
+  `i18n` varchar(64) NOT NULL DEFAULT 'EN',
+  `autoTagging` varchar(64) NOT NULL DEFAULT 'false',
+  `timezone` varchar(64) NOT NULL DEFAULT 'UTC',
+  `firstDayOfWeek` varchar(64) NOT NULL DEFAULT 'MON',
+  `dateFormat` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'L',
+  `defaultOrder` varchar(64) NOT NULL DEFAULT 'CREATED',
+  PRIMARY KEY (`id`),
+  KEY `userId` (`userId`),
+  CONSTRAINT `settings_ibfk_2` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
@@ -42,4 +75,4 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
--- 2021-12-02 17:52:41
+-- 2021-12-15 19:10:11
