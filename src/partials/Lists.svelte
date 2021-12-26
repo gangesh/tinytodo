@@ -31,7 +31,7 @@
 	<li class="mb-3.5">
 		<form on:submit|preventDefault={addList}>
 			<input
-				class="border-gray-darkest border w-34 p-1 text-sm rounded-md"
+				class="border-gray-darkest border w-48 p-2 text-md"
 				type="text"
 				bind:value={name}
 				placeholder="New list"
@@ -41,11 +41,11 @@
 			>
 		</form>
 	</li>
-	<h2 class="font-bold text-xl">My Lists</h2>
+	<h2 class="font-bold text-xl mt-10">My Lists</h2>
 	{#each $lists.mine as list}
 		<List {list} />
 	{/each}
-	<h2 class="font-bold text-xl">Shared With Me</h2>
+	<h2 class="font-bold text-xl mt-5">Shared With Me</h2>
 	{#each $lists.shared as list}
 		<List {list} />
 	{/each}
