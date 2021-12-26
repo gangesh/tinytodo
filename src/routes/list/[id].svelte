@@ -33,7 +33,7 @@
 
 <div class="flex">
 	{#if page$ && $lists}
-		<div class="w-48 border-r border-gray-dark">
+		<div class="w-64 p-5 pt-0 border-r border-gray-dark">
 			<Lists />
 		</div>
 		<div class="flex-1">

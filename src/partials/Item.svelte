@@ -72,7 +72,7 @@
 		{#if loading}
 			<i class="fas fa-spinner fa-pulse" />
 		{:else}
-			<input
+			<input class="mr-1"
 				type="checkbox"
 				checked={item.status === "DONE"}
 				on:click={setStatus}
@@ -80,12 +80,12 @@
 		{/if}
 		{#if item.priority === 2}
 			<span
-				class="inline-block bg-red-lighter text-white px-1 font-bold text-sm"
+				class="inline-block bg-red-lighter text-white mx-1 px-1 font-bold text-sm"
 				>+2</span
 			>
 		{:else if item.priority === 1}
 			<span
-				class="inline-block bg-orange text-white px-1 font-bold text-sm"
+				class="inline-block bg-orange text-white mx-1 px-1 font-bold text-sm"
 				>+1</span
 			>
 		{:else if item.priority === -1}
@@ -100,13 +100,13 @@
 			>{item.subject}</span
 		>
 		{#if item.tags}
-			<small class="font-bold">
+			<small class="ml-3">
 				{#each item.tags.split(",") as tag, i}
 					<span
-						class="hover:opacity-80 underline"
+						class="hover:opacity-80 bg-gray px-2 py-1 rounded"
 						on:click={() => addTag(tag.trim(), $tags)}
 						>{tag.trim()}</span
-					>{i !== item.tags.split(",").length - 1 ? ", " : ""}
+					>{i !== item.tags.split(",").length - 1 ? " " : ""}
 				{/each}
 			</small>
 		{/if}
@@ -126,12 +126,12 @@
 		{:else if isOverdue(item)}
 			<span class="text-red">
 				<i class="fas fa-arrow-left" />
-				due {getTimeRemaining(item.due)}
+				 {getTimeRemaining(item.due)}
 			</span>
 		{:else if item.due && item.status === "TODO"}
-			<span>
+			<span class="text-green">
 				<i class="fas fa-arrow-right" />
-				{getTimeRemaining(item.due, true)}
+				in {getTimeRemaining(item.due, true)}
 			</span>
 		{/if}
 		{#if item.due}

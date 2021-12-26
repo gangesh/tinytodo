@@ -111,7 +111,7 @@
 	<div class="mr-2">
 		<form on:submit|preventDefault={addItem}>
 			<input
-				class="border-gray-darkest border w-96 p-1 text-sm rounded-md"
+				class="border-gray-darkest border w-96 p-2 text-md"
 				type="text"
 				bind:value={subject}
 				placeholder="New item"
@@ -124,7 +124,7 @@
 	<div class="flex-1 text-right">
 		<input
 			id="search"
-			class="border-gray-darkest border w-64 p-1 text-sm rounded-md"
+			class="border-gray-darkest border w-48 p-2 text-md"
 			type="text"
 			bind:value={$search}
 			placeholder="Search"
@@ -132,7 +132,7 @@
 	</div>
 </div>
 <Tags />
-<div class="py-3 px-3 flex items-center flex-align border-b-2 border-blue">
+<div class="py-3 px-3 flex items-center flex-align border-b border-gray-dark">
 	{#if getList($lists, listId)}
 		<h2 class="font-bold mr-2">
 			{filters[$filter]} ({getList($lists, listId).items[$filter].length})
@@ -186,7 +186,7 @@
 		</small>
 	</div>
 </div>
-<ul class="h-items my-3 overflow-auto">
+<ul class="h-items overflow-auto">
 	{#each items as item, i}
 		<Item {item} showNotes={notes} />
 	{/each}

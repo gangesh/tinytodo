@@ -2,12 +2,12 @@
 	import { token, settings, loading, activeSettings } from "$lib/stores";
 </script>
 
-<header class="flex mb-3 mt-2">
+<header class="flex mb-3 mt-2 pl-5 pr-5 pt-3 pb-3">
 	<div class="mr-3">
 		<a href="/">
 			<h1 class="text-2xl font-bold">
 				{#if $settings.title == null}
-					myTinyTodo
+					TinyTodo
 				{:else}
 					{$settings.title}
 				{/if}
@@ -15,7 +15,7 @@
 			</h1>
 		</a>
 	</div>
-	<div class="border-b border-blue flex-1 text-right">
+	<div class="border-b border-gray-darkest flex-1 text-right">
 		{#if $token}
 			<small
 				class="mr-3 cursor-pointer"
