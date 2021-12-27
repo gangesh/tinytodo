@@ -54,7 +54,7 @@ CREATE TABLE `lists` (
 CREATE TABLE `settings` (
   `id` int NOT NULL AUTO_INCREMENT,
   `userId` int NOT NULL,
-  `title` varchar(64) NOT NULL DEFAULT 'myTinyTodo',
+  `title` varchar(64) NOT NULL DEFAULT 'TinyTodo',
   `i18n` varchar(64) NOT NULL DEFAULT 'EN',
   `autoTagging` varchar(64) NOT NULL DEFAULT 'false',
   `timezone` varchar(64) NOT NULL DEFAULT 'UTC',
