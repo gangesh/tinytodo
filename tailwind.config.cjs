@@ -44,6 +44,9 @@ module.exports = {
         DEFAULT: '#fbfbfb',
         dark: '#ededed',
         darkest: '#ccc'
+      },
+      green: {
+       DEFAULT: '#008000',
       }
     },
     screens: {
@@ -52,7 +55,7 @@ module.exports = {
       'desktop': '1000px',
     },
     fontFamily: {
-      sans: ['Helvetica Neue','helvetica','arial','sans-serif'],
+      default: ['Arial','Helvetica Neue','helvetica','sans-serif'],
     }
   },
   variants: {

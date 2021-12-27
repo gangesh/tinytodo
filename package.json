@@ -10,6 +10,7 @@
     "@sveltejs/adapter-node": "^1.0.0-next.55",
     "@sveltejs/kit": "next",
     "autoprefixer": "~10.4.0",
+    "postcss": "~8.4.4",
     "postcss-load-config": "~3.1.0",
     "svelte": "^3.42.6",
     "svelte-preprocess": "~4.9.8",
@@ -20,6 +21,7 @@
     "bcryptjs": "~2.4.3",
     "jsonwebtoken": "~8.5.1",
     "knex": "~0.95.14",
+    "moment": "^2.29.1",
     "mysql": "~2.18.1"
   },
   "type": "module"
