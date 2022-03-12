@@ -3,9 +3,8 @@
 	import { getList } from "$lib/lists";
 
 	lists.subscribe((lists) => {
-		console.log("UPDATE", lists);
+		if (!$activeList) { return }
 		const list = getList(lists, $activeList.id);
-		console.log("LIST", list);
 		activeList.set(list);
 	});
 

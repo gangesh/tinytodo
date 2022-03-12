@@ -15,8 +15,6 @@
 	export let item;
 	export let showNotes = false;
 
-	let loading = false;
-
 	const setActive = () => {
 		if ($activeItem === item) {
 			activeItem.set(null);
@@ -26,23 +24,18 @@
 	};
 
 	async function setStatus(e) {
-		loading = true;
-		e.preventDefault();
-		const s = item.status === "TODO" ? "DONE" : "TODO";
+		item.status = item.status === "TODO" ? "DONE" : "TODO";
+
 		let status = await fetch("/api/items", {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json",
 				Authorization: $token,
 			},
-			body: JSON.stringify({ id: item.id, status: s }),
+			body: JSON.stringify({ id: item.id, status: item.status }),
 		}).then((i) => i.json());
 
 		fetchData($token);
-
-		setTimeout(() => {
-			loading = false;
-		}, 500);
 	}
 
 	async function deleteItem() {
@@ -69,15 +62,11 @@
 	class="group-scope border-b hover:bg-gray-dark border-gray-dark cursor-pointer p-2 flex"
 >
 	<div class="flex-1 font-light" on:click|self={setActive}>
-		{#if loading}
-			<i class="fas fa-spinner fa-pulse" />
-		{:else}
-			<input class="mr-1"
-				type="checkbox"
-				checked={item.status === "DONE"}
-				on:click={setStatus}
-			/>
-		{/if}
+		<input class="mr-1"
+			type="checkbox"
+			checked={item.status === "DONE"}
+			on:click={setStatus}
+		/>
 		{#if item.priority === 2}
 			<span
 				class="inline-block bg-red-lighter text-white mx-1 px-1 font-bold text-sm"
