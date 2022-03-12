@@ -1,6 +1,10 @@
 module.exports = {
   // add this section
-  content: ["./src/**/*.{html,js,svelte}"],
+  purge: [
+    './src/**/*.html',
+    './src/**/*.svelte'
+  ],
+  darkMode: false, // or 'media' or 'class'
   theme: {
     groupLevel: 10,
     groupScope: "scope",

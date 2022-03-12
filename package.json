@@ -1,27 +1,28 @@
 {
-	"name": "tinytodo",
-	"version": "2.0.0",
-	"scripts": {
-		"dev": "svelte-kit dev",
-		"build": "svelte-kit build",
-		"preview": "svelte-kit preview"
-	},
-	"devDependencies": {
-		"@sveltejs/adapter-node": "1.0.0-next.55",
-		"@sveltejs/kit": "1.0.0-next.189",
-		"autoprefixer": "^10.4.0",
-		"postcss": "^8.4.5",
-		"svelte": "^3.42.6",
-		"svelte-preprocess": "~4.9.8",
-		"tailwindcss": "^3.0.7",
-		"tailwindcss-nested-groups": "^1.2.4"
-	},
-	"dependencies": {
-		"bcryptjs": "~2.4.3",
-		"jsonwebtoken": "~8.5.1",
-		"knex": "~0.95.14",
-		"moment": "^2.29.1",
-		"mysql": "~2.18.1"
-	},
-	"type": "module"
+  "name": "tinytodo",
+  "version": "2.0.0",
+  "scripts": {
+    "dev": "svelte-kit dev",
+    "build": "svelte-kit build",
+    "preview": "svelte-kit preview"
+  },
+  "devDependencies": {
+    "@sveltejs/adapter-node": "1.0.0-next.55",
+    "@sveltejs/kit": "1.0.0-next.189",
+    "autoprefixer": "~10.4.0",
+    "postcss": "~8.4.4",
+    "postcss-load-config": "~3.1.0",
+    "svelte": "^3.42.6",
+    "svelte-preprocess": "~4.9.8",
+    "tailwindcss": "~2.2.19",
+    "tailwindcss-nested-groups": "^1.2.4"
+  },
+  "dependencies": {
+    "bcryptjs": "~2.4.3",
+    "jsonwebtoken": "~8.5.1",
+    "knex": "~0.95.14",
+    "moment": "^2.29.1",
+    "mysql": "~2.18.1"
+  },
+  "type": "module"
 }
